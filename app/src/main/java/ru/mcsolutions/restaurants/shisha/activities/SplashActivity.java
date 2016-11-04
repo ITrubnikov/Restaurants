@@ -54,7 +54,7 @@ public class SplashActivity extends AppCompatActivity {
                 Intent intent = new Intent(context, MainMenuActivity.class);
                 startActivity(intent);
             }
-        }, 5* 1000);//5 секунд
+        }, 10000);//5 секунд
 
         Global.init(getApplicationContext());
         locationManager = (LocationManager) context.getSystemService(context.LOCATION_SERVICE);
@@ -75,7 +75,7 @@ public class SplashActivity extends AppCompatActivity {
             locationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER, 1000 * 10, 10, locationListener);
         }
-        videoView.start();
+//        videoView.start();
 
         final Internet internet = new Internet(context);
         if (internet.isExists()) {
@@ -106,13 +106,13 @@ public class SplashActivity extends AppCompatActivity {
             Toast.makeText(context, Global.INTERNET_NOT_AVAILABLE, Toast.LENGTH_LONG).show();
         }
     }
-
+/*
     @Override
     protected void onStop(){
         super.onStop();
         finish();
     }
-
+*/
     private LocationListener locationListener = new LocationListener() {
 
         @Override
@@ -149,20 +149,21 @@ public class SplashActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            locationManager.removeUpdates(this);
+//            locationManager.removeUpdates(this);
         }
 
         void getLocation(Location location) throws IOException {
             if (location == null) {
                 return;
             } else {
-                final Internet internet = new Internet(context);
+Toast.makeText(context, location.getLatitude()+", "+location.getLongitude(), Toast.LENGTH_LONG);
 
 //                Global.latitude = location.getLatitude();
 //                Global.longitude = location.getLongitude();
 //Тестирование. Рядом в Happy Bar
                 Global.latitude = 55.7676;
                 Global.longitude = 37.5596;
+                final Internet internet = new Internet(context);
                 if (internet.isExists()) {
                     Handler handler = new Handler() {
                         public void handleMessage(Message message) {
@@ -178,6 +179,7 @@ public class SplashActivity extends AppCompatActivity {
                                         }else{
                                             Global.currentOrder.locations = Global.parsers.getLocations(result);
                                             Global.location = Global.currentOrder.locations.get(0);
+Toast.makeText(context, Global.location.getName(), Toast.LENGTH_LONG);
                                             Global.canOrder = Global.location.getDistance()<100;
                                         }
                                         break;

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import ru.mcsolutions.restaurants.shisha.R;
 import ru.mcsolutions.restaurants.shisha.adapters.MainMenusRecyclerAdapter;
@@ -13,6 +14,7 @@ import ru.mcsolutions.restaurants.shisha.tools.Global;
 public class MainMenuActivity extends AppCompatActivity {
 
     Context context = this;
+    TextView textViewLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,5 +26,8 @@ public class MainMenuActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         MainMenusRecyclerAdapter mainMenusRecyclerAdapter = new MainMenusRecyclerAdapter(context, Global.mainMenus);
         recyclerView.setAdapter(mainMenusRecyclerAdapter);
+
+        textViewLocation = (TextView) findViewById(R.id.textViewLocation);
+        textViewLocation.setText(Global.location.getName());
     }
 }
