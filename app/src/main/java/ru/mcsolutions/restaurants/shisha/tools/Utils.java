@@ -10,6 +10,10 @@ public class Utils {
         Log.d("timur", Global.simpleDateTimeFormat.format(new Date()) + ": " + message);
     }
 
+    public static void log(int message){
+        Log.d("timur", Global.simpleDateTimeFormat.format(new Date()) + ": " + message);
+    }
+
     public static String getDecimalString(Double double_){
         return Global.decimalFormat.format(double_);
     }
