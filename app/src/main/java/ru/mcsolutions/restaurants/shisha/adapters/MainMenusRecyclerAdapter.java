@@ -2,11 +2,11 @@ package ru.mcsolutions.restaurants.shisha.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -19,13 +19,13 @@ public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecy
 
     public class MainMenusViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewId;
-        TextView textViewName;
+        AppCompatTextView textViewId;
+        AppCompatTextView textViewName;
 
         public MainMenusViewHolder(View itemView) {
             super(itemView);
-            this.textViewId = (TextView) itemView.findViewById(R.id.textViewId);
-            this.textViewName = (TextView) itemView.findViewById(R.id.textViewName);
+            this.textViewId = (AppCompatTextView) itemView.findViewById(R.id.textViewId);
+            this.textViewName = (AppCompatTextView) itemView.findViewById(R.id.textViewName);
         }
     }
 
@@ -46,9 +46,9 @@ public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecy
 
     @Override
     public void onBindViewHolder(final MainMenusViewHolder viewHolder, final int position) {
-        TextView textViewId = viewHolder.textViewId;
+        AppCompatTextView textViewId = viewHolder.textViewId;
         textViewId.setText(mainMenus.get(position).getId());
-        TextView textViewName = viewHolder.textViewName;
+        AppCompatTextView textViewName = viewHolder.textViewName;
         final String name = mainMenus.get(position).getName();
         textViewName.setText(name);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

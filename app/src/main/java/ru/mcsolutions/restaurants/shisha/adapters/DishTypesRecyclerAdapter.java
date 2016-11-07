@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -19,9 +18,9 @@ public class DishTypesRecyclerAdapter extends RecyclerView.Adapter<DishTypesRecy
 
     public class DishTypesViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewId;
-        TextView textViewName;
-        TextView textViewImageName;
+        AppCompatTextView textViewId;
+        AppCompatTextView textViewName;
+        AppCompatTextView textViewImageName;
 
         public DishTypesViewHolder(View itemView) {
             super(itemView);
@@ -48,13 +47,13 @@ public class DishTypesRecyclerAdapter extends RecyclerView.Adapter<DishTypesRecy
 
     @Override
     public void onBindViewHolder(DishTypesViewHolder viewHolder, int position) {
-        TextView textViewId = viewHolder.textViewId;
+        AppCompatTextView textViewId = viewHolder.textViewId;
         final String idDishType = dishTypes.get(position).getId();
         textViewId.setText(idDishType);
-        TextView textViewName = viewHolder.textViewName;
+        AppCompatTextView textViewName = viewHolder.textViewName;
         final String dishType = dishTypes.get(position).getName();
         textViewName.setText(dishType);
-        TextView textViewImageName = viewHolder.textViewImageName;
+        AppCompatTextView textViewImageName = viewHolder.textViewImageName;
         textViewImageName.setText(dishTypes.get(position).getImageName());
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -17,13 +17,15 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import ru.mcsolutions.restaurants.shisha.R;
 import ru.mcsolutions.restaurants.shisha.adapters.DishesRecyclerAdapter;
 import ru.mcsolutions.restaurants.shisha.tools.Global;
+import ru.mcsolutions.restaurants.shisha.tools.Utils;
 
 public class DishesActivity extends AppCompatActivity {
 
     Context context = this;
-    String idDishType;
+    String idDishType, dishType;
     AppCompatTextView textViewTotal;
     AppCompatButton buttonOrder;
+    RecyclerView recyclerView;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -36,14 +38,21 @@ public class DishesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dishes);
 
         idDishType = getIntent().getStringExtra("idDishType");
+        Utils.log(idDishType);
+        dishType = getIntent().getStringExtra("dishType");
 
         textViewTotal = (AppCompatTextView) findViewById(R.id.textViewTotal);
         buttonOrder = (AppCompatButton) findViewById(R.id.buttonOrder);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewDishes);
+if(recyclerView == null){
+    Utils.log("recyclerView is null");
+}
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        DishesRecyclerAdapter dishesRecyclerAdapter = new DishesRecyclerAdapter(context, Global.currentOrder.dishes, "Меню", idDishType, textViewTotal);
+Utils.log(Global.currentOrder.dishes.size());
+        DishesRecyclerAdapter dishesRecyclerAdapter = new DishesRecyclerAdapter(
+                context, Global.currentOrder.dishes, "Меню", idDishType, textViewTotal);
         recyclerView.setAdapter(dishesRecyclerAdapter);
 
 
@@ -52,13 +61,13 @@ public class DishesActivity extends AppCompatActivity {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
-
+/*
     @Override
     protected void onResume() {
         super.onResume();
         textViewTotal.setText(Global.decimalFormat.format(Global.currentOrder.getTotal()));
     }
-
+*/
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.

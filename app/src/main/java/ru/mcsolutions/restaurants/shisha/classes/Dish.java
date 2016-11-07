@@ -8,9 +8,9 @@ public class Dish {
             section,
             idDish,
             idDishType,
-            dishName,
+            name,
             description,
-            imagename,
+            imageName,
             minutes;
     Double  price;
     int     weight;
@@ -34,11 +34,11 @@ public class Dish {
         return this.idDish;
     }
 
-    public void setDishName(String dishName){
-        this.dishName = dishName;
+    public void setName(String name){
+        this.name = name;
     }
-    public String getDishName(){
-        return dishName;
+    public String getName(){
+        return name;
     }
 
     public void setDescription(String description){
@@ -48,11 +48,11 @@ public class Dish {
         return description;
     }
 
-    public void setImagename(String imagename){
-        this.imagename = imagename;
+    public void setImageName(String imagename){
+        this.imageName = imageName;
     }
-    public String getImagename(){
-        return imagename;
+    public String getImageName(){
+        return imageName;
     }
 
     public void setPrice(String price){

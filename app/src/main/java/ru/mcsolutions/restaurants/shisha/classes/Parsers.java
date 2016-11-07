@@ -235,12 +235,12 @@ public class Parsers {
                                 case "section":     dish.setSection(value);     section = value;break;
                                 case "iddishtype":  dish.setIdDishType(value);  break;
                                 case "iddish":      dish.setIdDish(value);      break;
-                                case "name":        dish.setDishName(value);    break;
+                                case "name":        dish.setName(value);    break;
                                 case "price":       dish.setPrice(value);       break;
                                 case "weight":      dish.setWeight(value);      break;
                                 case "minutes":     dish.setMinutes(value);     break;
                                 case "description": dish.setDescription(value); break;
-                                case "imagename":   dish.setImagename(value);   break;
+                                case "imagename":   dish.setImageName(value);   break;
                             }
                         }
                     };
