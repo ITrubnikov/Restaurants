@@ -26,7 +26,7 @@ public class Global {
     public static String PACKNAME = "";
     public static String googleAccount = "";
 
-    public static boolean canOrder = false;
+    public static boolean isIn = false;
     public final static String COMPANY="shisha";
     public static Location location = new Location();
     public final static CurrentOrder currentOrder = new CurrentOrder();//Самый главный класс...
@@ -64,34 +64,6 @@ public class Global {
                 googleAccount = accounts[0].name;
             }
         }
-    }
-
-    public static String getDecimalString(Double double_){
-        return decimalFormat.format(double_);
-    }
-
-    public static String getIdOrderStatus(String idOrderStatus){
-        String result = "";
-        switch(idOrderStatus){
-            case "1": result = "Новый";break;
-            case "2": result = "Обслуживание";break;
-            case "3": result = "Закрыт / Оплачен";break;
-            case "4": result = "Клиент Редиска";break;
-            default: break;
-        }
-        return result;
-    }
-
-    public static String getIdOrderDishStatus(String idOrderStatus){
-        String result = "";
-        switch(idOrderStatus){
-            case "1": result = "Ожидается";break;
-            case "2": result = "Готовится";break;
-            case "3": result = "Серверуется";break;
-            case "4": result = "Подано";break;
-            default: break;
-        }
-        return result;
     }
 
 }

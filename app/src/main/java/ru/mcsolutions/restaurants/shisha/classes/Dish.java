@@ -1,6 +1,6 @@
 package ru.mcsolutions.restaurants.shisha.classes;
 
-import ru.mcsolutions.restaurants.shisha.tools.Global;
+import ru.mcsolutions.restaurants.shisha.tools.Utils;
 
 public class Dish {
 
@@ -8,7 +8,6 @@ public class Dish {
             idDish,
             idDishType,
             section,
-            dishType,
             dishName,
             description,
             imagename,
@@ -23,13 +22,6 @@ public class Dish {
     }
     public String getSection(){
         return this.section;
-    }
-
-    public void setDishType(String dishType){
-        this.dishType = dishType;
-    }
-    public String getDishType(){
-        return dishType;
     }
 
     public void setDishName(String dishName){
@@ -69,7 +61,7 @@ public class Dish {
     public Double getPrice(){
         return price;
     }
-    public String getPriceString() {return Global.getDecimalString(price);}
+    public String getPriceString() {return Utils.getDecimalString(price);}
 
     public void setWeight(String weight){
         this.weight = Integer.valueOf(weight);

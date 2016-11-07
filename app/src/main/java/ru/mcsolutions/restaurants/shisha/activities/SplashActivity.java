@@ -23,6 +23,7 @@ import java.io.IOException;
 import ru.mcsolutions.restaurants.shisha.R;
 import ru.mcsolutions.restaurants.shisha.tools.Global;
 import ru.mcsolutions.restaurants.shisha.tools.Internet;
+import ru.mcsolutions.restaurants.shisha.tools.Utils;
 
 public class SplashActivity extends AppCompatActivity {
     VideoView videoView;
@@ -47,22 +48,8 @@ public class SplashActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // прячем панель навигации
                         | View.SYSTEM_UI_FLAG_FULLSCREEN // прячем строку состояния
                         | View.SYSTEM_UI_FLAG_IMMERSIVE);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(context, MainMenuActivity.class);
-                startActivity(intent);
-            }
-        }, 10000);//5 секунд
-
         Global.init(getApplicationContext());
         locationManager = (LocationManager) context.getSystemService(context.LOCATION_SERVICE);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         if (
                 ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                         &&
@@ -75,44 +62,79 @@ public class SplashActivity extends AppCompatActivity {
             locationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER, 1000 * 10, 10, locationListener);
         }
-//        videoView.start();
-
-        final Internet internet = new Internet(context);
-        if (internet.isExists()) {
-            Handler handler = new Handler() {
-                public void handleMessage(Message message) {
-                    try {
-                        switch (message.what) {
-                            case Global.HTTP_PENDING:
-                                break;
-                            case Global.HTTP_FINISHED:
-                                String result = internet.result;
-                                if(result.startsWith("-1;")){
-                                    Toast.makeText(context, result.substring(3), Toast.LENGTH_LONG).show();
-                                    finish();
-                                }else{
-                                    Global.mainMenus = Global.parsers.getMainMenus(result);
-                                }
-                                break;
+        videoView.start();
+        {
+            final Internet internet = new Internet(context);
+            if (internet.isExists()) {
+                Handler handler = new Handler() {
+                    public void handleMessage(Message message) {
+                        try {
+                            switch (message.what) {
+                                case Global.HTTP_PENDING:
+                                    break;
+                                case Global.HTTP_FINISHED:
+                                    String result = internet.result;
+                                    if (result.startsWith("-1;")) {
+                                        Toast.makeText(context, result.substring(3), Toast.LENGTH_LONG).show();
+                                        finish();
+                                    } else {
+                                        Global.mainMenus = Global.parsers.getMainMenus(result);
+                                    }
+                                    break;
+                            }
+                        } catch (Exception e) {
+                            Utils.log(e.getMessage());
                         }
-                    } catch (Exception e) {
-
                     }
-                }
 
+                };
+                internet.startURL("clients.getMainMenu", handler);
+            } else {
+                Toast.makeText(context, Global.INTERNET_NOT_AVAILABLE, Toast.LENGTH_LONG).show();
+            }
+        }
+        {
+            final Internet internet = new Internet(context);
+            if (internet.isExists()) {
+                Handler handler = new Handler() {
+                    public void handleMessage(Message message) {
+                        try {
+                            switch (message.what) {
+                                case Global.HTTP_PENDING:
+                                    break;
+                                case Global.HTTP_FINISHED:
+                                    String result = internet.result;
+                                    if (result.startsWith("-1;")) {
+                                        Toast.makeText(context, result.substring(3), Toast.LENGTH_LONG).show();
+                                        finish();
+                                    } else {
+                                        Global.currentOrder.orders = Global.parsers.getOrders(result);
+                                    }
+                                    break;
+                            }
+                        } catch (Exception e) {
+                            Utils.log(e.getMessage());
+                        }
+                    }
+
+                };
+                internet.startURL("clients.getOrders", handler);
+            } else {
+                Toast.makeText(context, Global.INTERNET_NOT_AVAILABLE, Toast.LENGTH_LONG).show();
+            }
+        }
+        {
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(context, MainMenuActivity.class);
+                    startActivity(intent);
+                }
             };
-            internet.startURL("clients.getMainMenu", handler);
-        } else {
-            Toast.makeText(context, Global.INTERNET_NOT_AVAILABLE, Toast.LENGTH_LONG).show();
+            new Handler().postDelayed(runnable, 5000);//5 секунд
         }
     }
-/*
-    @Override
-    protected void onStop(){
-        super.onStop();
-        finish();
-    }
-*/
+
     private LocationListener locationListener = new LocationListener() {
 
         @Override
@@ -120,6 +142,7 @@ public class SplashActivity extends AppCompatActivity {
             try {
                 getLocation(location);
             } catch (IOException e) {
+                Utils.log(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -143,21 +166,26 @@ public class SplashActivity extends AppCompatActivity {
                 Toast.makeText(context, Global.GPS_NOT_AVAILABLE, Toast.LENGTH_LONG).show();
                 return;
             }
-            //Toast.makeText(context, provider, Toast.LENGTH_LONG).show();
             try {
                 getLocation(locationManager.getLastKnownLocation(provider));
             } catch (IOException e) {
+                Utils.log(e.getMessage());
                 e.printStackTrace();
             }
-//            locationManager.removeUpdates(this);
         }
 
         void getLocation(Location location) throws IOException {
             if (location == null) {
                 return;
             } else {
-Toast.makeText(context, location.getLatitude()+", "+location.getLongitude(), Toast.LENGTH_LONG);
-
+                Utils.log("Real location: " + location.getLatitude() + ", " + location.getLongitude());
+                if (
+                        ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                        &&
+                        ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                locationManager.removeUpdates(locationListener);
 //                Global.latitude = location.getLatitude();
 //                Global.longitude = location.getLongitude();
 //Тестирование. Рядом в Happy Bar
@@ -179,13 +207,72 @@ Toast.makeText(context, location.getLatitude()+", "+location.getLongitude(), Toa
                                         }else{
                                             Global.currentOrder.locations = Global.parsers.getLocations(result);
                                             Global.location = Global.currentOrder.locations.get(0);
-Toast.makeText(context, Global.location.getName(), Toast.LENGTH_LONG);
-                                            Global.canOrder = Global.location.getDistance()<100;
+                                            Global.isIn = Global.location.getDistance()<100;
+                                            if(Global.isIn){
+                                                {
+                                                    final Internet internet = new Internet(context);
+                                                    Handler handler = new Handler() {
+                                                        public void handleMessage(Message message) {
+                                                            try {
+                                                                switch (message.what) {
+                                                                    case Global.HTTP_PENDING:
+                                                                        break;
+                                                                    case Global.HTTP_FINISHED:
+                                                                        String result = internet.result;
+                                                                        if (result.startsWith("-1;")) {
+                                                                            Toast.makeText(context, result.substring(3), Toast.LENGTH_LONG).show();
+                                                                            finish();
+                                                                        } else {
+                                                                            Global.currentOrder.dishes = Global.parsers.getDishes(result);
+                                                                        }
+                                                                        break;
+                                                                }
+                                                            } catch (Exception e) {
+                                                                Utils.log(e.getMessage());
+                                                            }
+                                                        }
+
+                                                    };
+                                                    internet.addParamNameValue("idlocation", Global.location.getId());
+                                                    internet.startURL("clients.getDishes", handler);
+                                                }
+                                                {
+                                                    final Internet internet = new Internet(context);
+                                                    if (internet.isExists()) {
+                                                        Handler handler = new Handler() {
+                                                            public void handleMessage(Message message) {
+                                                                try {
+                                                                    switch (message.what) {
+                                                                        case Global.HTTP_PENDING:
+                                                                            break;
+                                                                        case Global.HTTP_FINISHED:
+                                                                            String result = internet.result;
+                                                                            if (result.startsWith("-1;")) {
+                                                                                Toast.makeText(context, result.substring(3), Toast.LENGTH_LONG).show();
+                                                                                finish();
+                                                                            } else {
+                                                                                Global.currentOrder.dishTypes = Global.parsers.getDishTypes(result);
+                                                                            }
+                                                                            break;
+                                                                    }
+                                                                } catch (Exception e) {
+                                                                    Utils.log(e.getMessage());
+                                                                }
+                                                            }
+
+                                                        };
+                                                        internet.addParamNameValue("idlocation", Global.location.getId());
+                                                        internet.startURL("clients.getDishTypes", handler);
+                                                    } else {
+                                                        Toast.makeText(context, Global.INTERNET_NOT_AVAILABLE, Toast.LENGTH_LONG).show();
+                                                    }
+                                                }
+                                            }
                                         }
                                         break;
                                 }
                             } catch (Exception e) {
-
+                                Utils.log(e.getMessage());
                             }
                         }
 
@@ -199,5 +286,11 @@ Toast.makeText(context, Global.location.getName(), Toast.LENGTH_LONG);
             }
         }
     };
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
 
 }

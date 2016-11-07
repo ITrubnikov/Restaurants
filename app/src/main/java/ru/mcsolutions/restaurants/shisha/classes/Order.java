@@ -1,6 +1,9 @@
 package ru.mcsolutions.restaurants.shisha.classes;
 
+import java.text.ParseException;
 import java.util.Date;
+
+import ru.mcsolutions.restaurants.shisha.tools.Global;
 
 public class Order {
 
@@ -37,5 +40,26 @@ public class Order {
 
     public void setIdWorkDay(String idWorkDay) {this.idWorkDay = idWorkDay;}
     public String getIdWorkDay() {return idWorkDay;}
+
+    public void setAmount(String amount) {this.amount = Double.valueOf(amount);}
+    public Double getAmount() {return amount;}
+
+    public void setODate(String oDate) throws ParseException {
+        if(oDate.equals("")){
+            oDate = null;
+        }else{
+            this.oDate = Global.simpleDateTimeFormat.parse(oDate);
+        }
+    }
+    public Date getODate() {return oDate;}
+
+    public void setPDate(String pDate) throws ParseException {
+        if(pDate.equals("")){
+            pDate = null;
+        }else{
+            this.pDate = Global.simpleDateTimeFormat.parse(pDate);
+        }
+    }
+    public Date getPDate() {return pDate;}
 
 }

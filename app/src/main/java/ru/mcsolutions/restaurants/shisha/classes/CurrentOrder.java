@@ -7,7 +7,7 @@ public class CurrentOrder {
 
     public ArrayList<Dish> dishes;
     public ArrayList<String> sections;
-    public ArrayList<String> dishTypes;
+    public ArrayList<DishType> dishTypes;
     public ArrayList<OrderDish> orderDishes;
     public ArrayList<Location> locations;
     public ArrayList<TotalOrderDish> totalOrderDishes;
@@ -19,7 +19,7 @@ public class CurrentOrder {
     public CurrentOrder() {
         dishes = new ArrayList<Dish>();
         sections = new ArrayList<String>();
-        dishTypes = new ArrayList<String>();
+        dishTypes = new ArrayList<DishType>();
         orderDishes = new ArrayList<OrderDish>();
         locations = new ArrayList<Location>();
         totalOrderDishes = new ArrayList<TotalOrderDish>();

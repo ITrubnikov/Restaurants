@@ -59,28 +59,44 @@ public class Location {
     }
 
     public void setBeghour(String beghour) {
-        this.beghour = Integer.valueOf(beghour);
+        if(beghour.equals("")){
+            this.beghour = -1;
+        }else{
+            this.beghour = Integer.valueOf(beghour);
+        }
     }
     public int getBeghour() {
         return beghour;
     }
 
     public void setEndhour(String endhour) {
-        this.endhour = Integer.valueOf(endhour);
+        if(endhour.equals("")){
+            this.endhour = -1;
+        }else{
+            this.endhour = Integer.valueOf(endhour);
+        }
     }
     public int getEndhour() {
         return endhour;
     }
 
     public void setBlbeghour(String blbeghour) {
-        this.blbeghour = Integer.valueOf(blbeghour);
+        if(blbeghour.equals("")){
+            this.blbeghour = -1;
+        }else{
+            this.blbeghour = Integer.valueOf(blbeghour);
+        }
     }
     public int getBlbeghour() {
         return blbeghour;
     }
 
     public void setBlendhour(String blendhour) {
-        this.blendhour = Integer.valueOf(blendhour);
+        if(blendhour.equals("")){
+            this.blendhour = -1;
+        }else{
+            this.blendhour = Integer.valueOf(blendhour);
+        }
     }
     public int getBlendhour() {
         return blendhour;

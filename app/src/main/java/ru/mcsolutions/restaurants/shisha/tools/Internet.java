@@ -208,8 +208,11 @@ public class Internet {
 
             String result = "";
 
+
             try {
-                URL url = new URL(Global.HTTP+params[0]);
+
+                String urlString = Global.HTTP + params[0];
+                URL url = new URL(urlString);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setReadTimeout(Global.TIMEOUT);
                 connection.setConnectTimeout(Global.TIMEOUT);
@@ -223,7 +226,7 @@ public class Internet {
                 for(int i=0;i<paramNames.size();i++){
                     urlParams = urlParams + "&" + paramNames.get(i) + "=" + URLEncoder.encode(paramValues.get(i),"UTF-8");
                 }
-                Log.d("timur", urlParams);
+Utils.log(urlString + "?" + urlParams);
                 paramNames.clear();
                 paramValues.clear();
                 connection.setRequestProperty("Content-Length", "" + Integer.toString(urlParams.getBytes().length));
@@ -237,10 +240,12 @@ public class Internet {
                 StringBuffer response = new StringBuffer();
                 while((line = br.readLine()) != null){
                     response.append(line);
-                    response.append("\r");
+                    response.append("\n");
                 }
                 br.close();
                 result = response.toString();
+Utils.log(result);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -250,6 +255,7 @@ public class Internet {
 
         @Override
         protected void onPostExecute(String result) {
+
             super.onPostExecute(result);
         }
         @Override
@@ -435,6 +441,5 @@ public class Internet {
 
         }
     }
-
 
 }

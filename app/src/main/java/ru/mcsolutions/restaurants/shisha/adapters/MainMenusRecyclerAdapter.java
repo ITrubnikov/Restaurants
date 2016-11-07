@@ -1,6 +1,7 @@
 package ru.mcsolutions.restaurants.shisha.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,10 +9,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import ru.mcsolutions.restaurants.shisha.R;
-import ru.mcsolutions.restaurants.shisha.classes.MainMenu;
-
 import java.util.ArrayList;
+
+import ru.mcsolutions.restaurants.shisha.R;
+import ru.mcsolutions.restaurants.shisha.activities.DishTypesActivity;
+import ru.mcsolutions.restaurants.shisha.classes.MainMenu;
 
 public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecyclerAdapter.MainMenusViewHolder> {
 
@@ -52,7 +54,19 @@ public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecy
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, name, Toast.LENGTH_LONG).show();
+                switch(name){
+//                    case "Афиша":
+//                      break;
+                    case "Меню":
+                        Intent intent = new Intent(context, DishTypesActivity.class);
+                        context.startActivity(intent);
+                        break;
+                    case "Мои заказы":
+                        break;
+                    default:
+                        Toast.makeText(context, name + " еще не разработано", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
     }

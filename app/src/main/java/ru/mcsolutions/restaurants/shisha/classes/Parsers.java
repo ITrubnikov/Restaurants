@@ -1,7 +1,5 @@
 package ru.mcsolutions.restaurants.shisha.classes;
 
-import ru.mcsolutions.restaurants.shisha.tools.Global;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -11,6 +9,9 @@ import java.io.StringReader;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import ru.mcsolutions.restaurants.shisha.tools.Global;
+import ru.mcsolutions.restaurants.shisha.tools.Utils;
 
 public class Parsers {
 
@@ -72,6 +73,7 @@ public class Parsers {
             }
             xpp.next();
         }
+        Utils.log("locations.size() = " + locations.size());
         return locations;
     }
 
@@ -109,15 +111,112 @@ public class Parsers {
             }
             xpp.next();
         }
+        Utils.log("mainMenus.size() = " + mainMenus.size());
         return mainMenus;
     }
 
+    public ArrayList<Order> getOrders(String xml) throws XmlPullParserException, IOException, ParseException {
+        ArrayList<Order> orders = new ArrayList<Order>();
+        xpp.setInput(new StringReader(xml));
+        Order order = null;
+        while (xpp.getEventType() != XmlPullParser.END_DOCUMENT) {
+            switch (xpp.getEventType()) {
+                case XmlPullParser.START_TAG:
+                    if (xpp.getName().equals("row") && xpp.getDepth() == 2) {
+                        order = new Order();
+                    } else {
+                        if (xpp.getDepth() == 3) {
+                            String startTag = xpp.getName();
+                            xpp.next();
+                            String value = xpp.getText();
+                            if (value == null) {
+                                value = "";
+                            }
+                            switch (startTag) {
+                                case "idorder":
+                                    order.setId(value);
+                                    break;
+                                case "idorderstatus":
+                                    order.setIdOrderStatus(value);
+                                    break;
+                                case "name":
+                                    order.setName(value);
+                                    break;
+                                case "idlocation":
+                                    order.setIdLocation(value);
+                                    break;
+                                case "idworkday":
+                                    order.setIdWorkDay(value);
+                                    break;
+                                case "odate":
+                                    order.setODate(value);
+                                    break;
+                                case "pdate":
+                                    order.setPDate(value);
+                                    break;
+                                default: break;
+                            }
+                        }
+                    }
+                    ;
+                    break;
+                case XmlPullParser.END_TAG:
+                    if (xpp.getName().equals("row")) {
+                        orders.add(order);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            xpp.next();
+        }
+        Utils.log("orders.size() = " + orders.size());
+        return orders;
+    }
+
+    public ArrayList<DishType> getDishTypes(String xml) throws XmlPullParserException, IOException {
+        ArrayList<DishType> dishTypes = new ArrayList<DishType>();
+        xpp.setInput(new StringReader(xml));
+        DishType dishType = null;
+        while (xpp.getEventType() != XmlPullParser.END_DOCUMENT) {
+            switch (xpp.getEventType()) {
+                case XmlPullParser.START_TAG:
+                    if(xpp.getName().equals("row") && xpp.getDepth()==2) {
+                        dishType = new DishType();
+                    }else{
+                        if (xpp.getDepth() == 3) {
+                            String startTag = xpp.getName();
+                            xpp.next();
+                            String value = xpp.getText();
+                            if(value==null){
+                                value = "";
+                            }
+                            switch(startTag){
+                                case "iddishtype":  dishType.setId(value);  break;
+                                case "name":        dishType.setName(value);    break;
+                                case "imagename":   dishType.setImageName(value);   break;
+                            }
+                        }
+                    };
+                    break;
+                case XmlPullParser.END_TAG:
+                    if(xpp.getName().equals("row")){
+                        dishTypes.add(dishType);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            xpp.next();
+        }
+        Utils.log("dishTypes.size() = " + dishTypes.size());
+        return dishTypes;
+    }
 
     public ArrayList<Dish> getDishes(String xml) throws XmlPullParserException, IOException {
         ArrayList<Dish> dishes = new ArrayList<Dish>();
         xpp.setInput(new StringReader(xml));
         Dish dish = null;
-        String dishType = "";
         String section = "";
         while (xpp.getEventType() != XmlPullParser.END_DOCUMENT) {
             switch (xpp.getEventType()) {
@@ -135,7 +234,6 @@ public class Parsers {
                             switch(startTag){
                                 case "section":     dish.setSection(value);     section = value;break;
                                 case "iddishtype":  dish.setIdDishType(value);  break;
-                                case "dishtype":    dish.setDishType(value);    dishType = value;break;
                                 case "iddish":      dish.setIdDish(value);      break;
                                 case "name":        dish.setDishName(value);    break;
                                 case "price":       dish.setPrice(value);       break;
@@ -153,9 +251,6 @@ public class Parsers {
                         if(Global.currentOrder.sections.indexOf(section)==0){
                             Global.currentOrder.sections.add(section);
                         }
-                        if(Global.currentOrder.dishTypes.indexOf(dishType)==0){
-                            Global.currentOrder.dishTypes.add(dishType);
-                        }
                     }
                     break;
                 default:
@@ -163,6 +258,7 @@ public class Parsers {
             }
             xpp.next();
         }
+        Utils.log("dishes.size() = " + dishes.size());
         return dishes;
     }
 
@@ -209,6 +305,7 @@ public class Parsers {
             }
             xpp.next();
         }
+        Utils.log("orderDishes.size() = " + orderDishes.size());
         return orderDishes;
     }
 
@@ -251,6 +348,7 @@ public class Parsers {
             }
             xpp.next();
         }
+        Utils.log("totalOrderDishes.size() = " + totalOrderDishes.size());
         return totalOrderDishes;
     }
 
@@ -285,6 +383,7 @@ public class Parsers {
             }
             xpp.next();
         }
+        Utils.log("arrayListHashMap.size() = " + arrayListHashMap.size());
         return arrayListHashMap;
     }
 
