@@ -29,7 +29,12 @@
             android:id="@+id/textViewTotal"
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="20dp"
-
+            />
+        <android.support.v7.widget.AppCompatButton
+            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:text="Заказать"
+            android:id="@+id/buttonOrder"
             />
 
     </android.support.v7.widget.Toolbar>

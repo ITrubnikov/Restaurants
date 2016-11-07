@@ -2,6 +2,7 @@ package ru.mcsolutions.restaurants.shisha.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,15 +25,14 @@ public class DishTypesRecyclerAdapter extends RecyclerView.Adapter<DishTypesRecy
 
         public DishTypesViewHolder(View itemView) {
             super(itemView);
-            this.textViewId = (TextView) itemView.findViewById(R.id.textViewId);
-            this.textViewName = (TextView) itemView.findViewById(R.id.textViewName);
-            this.textViewImageName = (TextView) itemView.findViewById(R.id.textViewImageName);
+            this.textViewId = (AppCompatTextView) itemView.findViewById(R.id.textViewId);
+            this.textViewName = (AppCompatTextView) itemView.findViewById(R.id.textViewName);
+            this.textViewImageName = (AppCompatTextView) itemView.findViewById(R.id.textViewImageName);
         }
     }
 
     private final Context context;
     private final ArrayList<DishType> dishTypes;
-
 
     public DishTypesRecyclerAdapter(Context context, ArrayList<DishType> dishTypes) {
         this.context = context;
@@ -49,17 +49,19 @@ public class DishTypesRecyclerAdapter extends RecyclerView.Adapter<DishTypesRecy
     @Override
     public void onBindViewHolder(DishTypesViewHolder viewHolder, int position) {
         TextView textViewId = viewHolder.textViewId;
-        textViewId.setText(dishTypes.get(position).getId());
+        final String idDishType = dishTypes.get(position).getId();
+        textViewId.setText(idDishType);
         TextView textViewName = viewHolder.textViewName;
-        final String name = dishTypes.get(position).getName();
-        textViewName.setText(name);
+        final String dishType = dishTypes.get(position).getName();
+        textViewName.setText(dishType);
         TextView textViewImageName = viewHolder.textViewImageName;
         textViewImageName.setText(dishTypes.get(position).getImageName());
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DishesActivity.class);
-                intent.putExtra("dishType", name);
+                intent.putExtra("idDishType", idDishType);
+                intent.putExtra("dishType", dishType);
                 context.startActivity(intent);
             }
         });

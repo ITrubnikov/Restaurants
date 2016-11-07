@@ -3,8 +3,10 @@ package ru.mcsolutions.restaurants.shisha.activities;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import ru.mcsolutions.restaurants.shisha.R;
 import ru.mcsolutions.restaurants.shisha.adapters.DishTypesRecyclerAdapter;
@@ -13,6 +15,8 @@ import ru.mcsolutions.restaurants.shisha.tools.Global;
 public class DishTypesActivity extends AppCompatActivity {
 
     Context context = this;
+    TextView textViewTotal;
+    AppCompatButton buttonOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +29,8 @@ public class DishTypesActivity extends AppCompatActivity {
         DishTypesRecyclerAdapter dishTypesRecyclerAdapter = new DishTypesRecyclerAdapter(context, Global.currentOrder.dishTypes);
         recyclerView.setAdapter(dishTypesRecyclerAdapter);
 
+        textViewTotal = (TextView) findViewById(R.id.textViewTotal);
+        buttonOrder = (AppCompatButton) findViewById(R.id.buttonOrder);
 
     }
 }
