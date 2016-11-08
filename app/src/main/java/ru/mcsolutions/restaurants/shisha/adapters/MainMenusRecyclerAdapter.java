@@ -21,11 +21,13 @@ public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecy
 
         AppCompatTextView textViewId;
         AppCompatTextView textViewName;
+        AppCompatTextView textViewImageName;
 
         public MainMenusViewHolder(View itemView) {
             super(itemView);
             this.textViewId = (AppCompatTextView) itemView.findViewById(R.id.textViewId);
             this.textViewName = (AppCompatTextView) itemView.findViewById(R.id.textViewName);
+            this.textViewImageName = (AppCompatTextView) itemView.findViewById(R.id.textViewImageName);
         }
     }
 
@@ -51,6 +53,8 @@ public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecy
         AppCompatTextView textViewName = viewHolder.textViewName;
         final String name = mainMenus.get(position).getName();
         textViewName.setText(name);
+        AppCompatTextView textViewImageName = viewHolder.textViewImageName;
+        textViewImageName.setText(mainMenus.get(position).getImageName());
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

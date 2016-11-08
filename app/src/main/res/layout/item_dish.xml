@@ -7,10 +7,9 @@
     android:orientation="horizontal"
     card_view:cardCornerRadius="6dp"
     card_view:cardUseCompatPadding="true"
-    card_view:cardElevation="10dp"
     card_view:contentPadding="10dp"
     card_view:cardBackgroundColor="#EEE"
-    android:layout_marginTop="10dp">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -70,6 +69,17 @@
                 android:id="@+id/buttonPlus"
                 android:layout_alignParentTop="true"
                 android:layout_toEndOf="@+id/buttonMinus" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/textViewCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="20dp"
+                android:layout_margin="10dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/buttonPlus" />
+
 
         </RelativeLayout>
 

@@ -4,6 +4,7 @@ public class MainMenu {
 
     String id;
     String name;
+    String imageName;
 
     public MainMenu(){}
 
@@ -19,5 +20,8 @@ public class MainMenu {
 
     public void setName (String name) {this.name = name;}
     public String getName(){return this.name;}
+
+    public void setImageName (String imageName) {this.imageName = imageName;}
+    public String getImageName(){return this.imageName;}
 
 }

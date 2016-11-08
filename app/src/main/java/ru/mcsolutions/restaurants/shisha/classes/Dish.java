@@ -24,7 +24,7 @@ public class Dish {
         return this.section;
     }
 
-    public void setIdDishType(String idDishType){this.idDish = idDishType;}
+    public void setIdDishType(String idDishType){this.idDishType = idDishType;}
     public String getIdDishType(){
         return idDishType;
     }
@@ -48,7 +48,7 @@ public class Dish {
         return description;
     }
 
-    public void setImageName(String imagename){
+    public void setImageName(String imageName){
         this.imageName = imageName;
     }
     public String getImageName(){

@@ -56,14 +56,28 @@ public class CurrentOrder {
         }
     }
 
-    public void delDish(int idDish){
+    public void deductDish(String idDish){
         for(int i = 0;i<orderDishes.size();i++){
             OrderDish orderDish = orderDishes.get(i);
             if(orderDish.getIdDish().equals(idDish) && currentPortion == orderDish.getPortion()){
-                orderDishes.remove(i);
+                orderDish.minusDish(idDish);
                 return;
             }
         }
+    }
+    public void setDishCount(String idDish, int count){
+        for(int i = 0;i<orderDishes.size();i++){
+            OrderDish orderDish = orderDishes.get(i);
+            if(orderDish.getIdDish().equals(idDish) && currentPortion == orderDish.getPortion()){
+                if(count == 0){
+                    orderDishes.remove(i);
+                }else{
+                    orderDish.setCount(count);
+                }
+                return;
+            }
+        }
+        orderDishes.add(new OrderDish(idDish, count, -1, currentPortion));
     }
 
     public void setCurrentPortionDate(int portion){
@@ -73,6 +87,17 @@ public class CurrentOrder {
                 orderDishes.get(i).setPortionDate(now);
             }
         }
+    }
+
+    public Double getPTotal(){
+        Double total = new Double(0);
+        for(int i=0;i<orderDishes.size();i++){
+            OrderDish orderDish = orderDishes.get(i);
+            if(orderDish.getPortion() == currentPortion) {
+                total = total + orderDish.getPriceFromDishes() * orderDish.getCount();
+            }
+        }
+        return total;
     }
 
     public Double getTotal(){
@@ -89,6 +114,17 @@ public class CurrentOrder {
         for(int i=0;i<orderDishes.size();i++){
             OrderDish orderDish = orderDishes.get(i);
             if(orderDish.getPortion() == portion){
+                result = result + orderDish.getString() + ";";
+            }
+        }
+        return result;
+    }
+
+    public String getString(){
+        String result = "";
+        for(int i=0;i<orderDishes.size();i++){
+            OrderDish orderDish = orderDishes.get(i);
+            if(orderDish.getPortion() == currentPortion){
                 result = result + orderDish.getString() + ";";
             }
         }

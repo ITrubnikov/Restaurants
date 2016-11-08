@@ -1,9 +1,9 @@
 package ru.mcsolutions.restaurants.shisha.classes;
 
-import ru.mcsolutions.restaurants.shisha.tools.Global;
-
 import java.text.ParseException;
 import java.util.Date;
+
+import ru.mcsolutions.restaurants.shisha.tools.Global;
 
 public class OrderDish {
 
@@ -67,6 +67,7 @@ public class OrderDish {
     }
 
     public void setCount(String count){this.count = Integer.valueOf(count);}
+    public void setCount(int count){this.count = count;}
     public int getCount(){
         return count;
     }

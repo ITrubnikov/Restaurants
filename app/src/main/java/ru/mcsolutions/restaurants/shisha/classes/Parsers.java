@@ -97,6 +97,7 @@ public class Parsers {
                             switch(startTag){
                                 case "id": mainMenu.setId(value);break;
                                 case "name": mainMenu.setName(value);break;
+                                case "imagename": mainMenu.setImageName(value);break;
                             }
                         }
                     };
