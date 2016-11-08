@@ -124,6 +124,39 @@ public class SplashActivity extends AppCompatActivity {
             }
         }
         {
+            final Internet internet = new Internet(context);
+            if (internet.isExists()) {
+                Handler handler = new Handler() {
+                    public void handleMessage(Message message) {
+                        try {
+                            switch (message.what) {
+                                case Global.HTTP_PENDING:
+                                    break;
+                                case Global.HTTP_FINISHED:
+                                    String result = internet.result;
+                                    if (result.startsWith("-1;")) {
+                                        Toast.makeText(context, result.substring(3), Toast.LENGTH_LONG).show();
+                                        finish();
+                                    } else {
+                                        if(result.startsWith("1;")){
+                                            Global.clientName = result.substring(2);
+                                            Utils.log(Global.clientName);
+                                        }
+                                    }
+                                    break;
+                            }
+                        } catch (Exception e) {
+                            Utils.log(e.getMessage());
+                        }
+                    }
+
+                };
+                internet.startURL("clients.getInfo", handler);
+            } else {
+                Toast.makeText(context, Global.INTERNET_NOT_AVAILABLE, Toast.LENGTH_LONG).show();
+            }
+        }
+        {
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {

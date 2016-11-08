@@ -50,7 +50,7 @@ public class DishesActivity extends AppCompatActivity {
 
         textViewCaption.setText(dishType);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewDishes);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         DishesRecyclerAdapter dishesRecyclerAdapter = new DishesRecyclerAdapter(

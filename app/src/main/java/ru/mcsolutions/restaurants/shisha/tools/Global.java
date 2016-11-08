@@ -25,6 +25,7 @@ public class Global {
 
     public static String PACKNAME = "";
     public static String googleAccount = "";
+    public static String clientName = "";
 
     public static boolean isIn = false;
     public final static String COMPANY="shisha";
@@ -47,6 +48,7 @@ public class Global {
     public static String TIMEOUT_ERROR = "База временно недоступна. Попробуйте обновиться позже";
     public static String INTERNET_NOT_AVAILABLE = "Интернет недоступен";
     public static final String GPS_NOT_AVAILABLE = "Нет разрешений на GPS и GPS от сети";
+    public static final String NOT_RECOGNIZED = "Ответ от сервера не распознан";
 
     public static void init(Context context) {
         PACKNAME = context.getPackageName().substring(15);
