@@ -31,12 +31,34 @@ public class SplashActivity extends AppCompatActivity {
     LocationManager locationManager;
     Context context = this;
     TextView textViewGPSCaption;
+    int PERMISSION_REQUEST_CODE;
+
+    @Override
+    protected void onStart() {
+
+
+        {
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(context, MainMenuActivity.class);
+                    startActivity(intent);
+                }
+            };
+            new Handler().postDelayed(runnable, 5000);//5 секунд
+        }
+        super.onStart();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         getSupportActionBar().hide();
+
+        requestMultiplePermissions();
+
+
 
         videoView = (VideoView) findViewById(R.id.videoView);
         videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.shi));
@@ -62,7 +84,7 @@ public class SplashActivity extends AppCompatActivity {
             locationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER, 1000 * 10, 10, locationListener);
         }
-        videoView.start();
+
         {
             final Internet internet = new Internet(context);
             if (internet.isExists()) {
@@ -156,16 +178,7 @@ public class SplashActivity extends AppCompatActivity {
                 Toast.makeText(context, Global.INTERNET_NOT_AVAILABLE, Toast.LENGTH_LONG).show();
             }
         }
-        {
-            Runnable runnable = new Runnable() {
-                @Override
-                public void run() {
-                    Intent intent = new Intent(context, MainMenuActivity.class);
-                    startActivity(intent);
-                }
-            };
-            new Handler().postDelayed(runnable, 5000);//5 секунд
-        }
+
     }
 
     private LocationListener locationListener = new LocationListener() {
@@ -324,6 +337,21 @@ public class SplashActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         finish();
+    }
+    public void requestMultiplePermissions() {
+        ActivityCompat.requestPermissions(this,
+                new String[] {
+                        Manifest.permission.INTERNET,
+                        Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.ACCESS_NETWORK_STATE,
+                        Manifest.permission.GET_ACCOUNTS,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.CALL_PHONE,
+                        Manifest.permission.ACCESS_WIFI_STATE,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                },
+                PERMISSION_REQUEST_CODE);
     }
 
 }
