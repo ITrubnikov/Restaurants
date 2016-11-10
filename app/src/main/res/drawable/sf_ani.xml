@@ -7,5 +7,5 @@
     <item android:state_focused="false"
         android:state_pressed="true"
         android:drawable="@drawable/sf_2" />
-    <item android:drawable="@drawable/sf" />
+    <item android:drawable="@drawable/shishas" />
 </selector>

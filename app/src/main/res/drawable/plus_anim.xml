@@ -3,9 +3,9 @@
 
     <item android:state_focused="true"
         android:state_pressed="true"
-        android:drawable="@drawable/plus2" />
+        android:drawable="@drawable/gallery" />
     <item android:state_focused="false"
         android:state_pressed="true"
-        android:drawable="@drawable/plus2" />
-    <item android:drawable="@drawable/plus1" />
+        android:drawable="@drawable/gallery" />
+    <item android:drawable="@drawable/myorders" />
 </selector>

@@ -15,6 +15,8 @@ public class MainMenu {
         this.name = name;
     }
 
+
+
     public void setId (String id) {this.id = id;}
     public String getId(){return this.id;}
 
@@ -22,6 +24,6 @@ public class MainMenu {
     public String getName(){return this.name;}
 
     public void setImageName (String imageName) {this.imageName = imageName;}
-    public String getImageName(){return this.imageName;}
+    public  String getImageName(){return this.imageName;}
 
 }
