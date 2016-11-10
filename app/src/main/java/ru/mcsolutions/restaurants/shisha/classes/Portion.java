@@ -5,8 +5,8 @@ import java.util.Date;
 public class Portion {
 
     int portion;
-    Double amount;
     Date date;
+    Double amount;
 
     public Portion(int portion) {
         this.portion = portion;
@@ -14,10 +14,22 @@ public class Portion {
         date = null;
     }
 
-    public void setAmount(Double amount) {
+    public Portion(int portion, Date date, Double amount) {
+        this.portion = portion;
+        this.date = date;
         this.amount = amount;
     }
 
+    public void setPortion(int portion) {
+        this.portion = portion;
+    }
+    public int getPortion() {
+        return portion;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
     public Double getAmount() {
         return amount;
     }
@@ -25,7 +37,6 @@ public class Portion {
     public void setDate(Date Date) {
         this.date = date;
     }
-
     public Date getDate() {
         return date;
     }

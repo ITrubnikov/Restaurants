@@ -12,6 +12,7 @@ public class CurrentOrder {
     public ArrayList<Location> locations;
     public ArrayList<TotalOrderDish> totalOrderDishes;
     public ArrayList<Order> orders;
+    public ArrayList<Portion> portions;
 
     int currentPortion;
     String idOrder;
@@ -25,6 +26,8 @@ public class CurrentOrder {
         totalOrderDishes = new ArrayList<TotalOrderDish>();
         orders = new ArrayList<Order>();
 
+        portions = new ArrayList<Portion>();
+        portions.add(new Portion(1));
         currentPortion = 1;
 
     }
@@ -80,13 +83,10 @@ public class CurrentOrder {
         orderDishes.add(new OrderDish(idDish, count, -1, currentPortion));
     }
 
-    public void setCurrentPortionDate(int portion){
-        Date now = new Date();
-        for(int i=0;i<orderDishes.size();i++){
-            if(orderDishes.get(i).getPortion() == portion){
-                orderDishes.get(i).setPortionDate(now);
-            }
-        }
+    public void setPortionDateAmount(){
+        Portion portion = portions.get(currentPortion);
+        portion.setDate(new Date());
+        portion.setAmount(getPTotal());
     }
 
     public Double getPTotal(){
@@ -107,17 +107,6 @@ public class CurrentOrder {
             total = total+orderDish.getPriceFromDishes() * orderDish.getCount();
         }
         return total;
-    }
-
-    public String getString(int portion){
-        String result = "";
-        for(int i=0;i<orderDishes.size();i++){
-            OrderDish orderDish = orderDishes.get(i);
-            if(orderDish.getPortion() == portion){
-                result = result + orderDish.getString() + ";";
-            }
-        }
-        return result;
     }
 
     public String getString(){

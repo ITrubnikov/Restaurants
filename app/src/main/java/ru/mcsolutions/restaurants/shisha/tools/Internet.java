@@ -13,7 +13,6 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -23,21 +22,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-
 public class Internet {
-
-//    URL url;
-//    HttpURLConnection connection;
-    //http://stackoverflow.com/questions/9767952/how-to-add-parameters-to-httpurlconnection-using-post
-
-//    DefaultHttpClient http;
 
     Context context;
     ConnectivityManager connectivity=null;
@@ -46,12 +36,11 @@ public class Internet {
 
     public String result = "";
 
-    List<String> paramNames, paramValues;
+    ArrayList<Param> params;
 
     public Internet(Context context) {
         this.context = context;
-        paramNames = new ArrayList<String>();
-        paramValues = new ArrayList<String>();
+        params = new ArrayList<Param>();
     }
 
     public String getConnectionType(){
@@ -177,8 +166,7 @@ public class Internet {
 
 
     public void addParamNameValue(String name, String value){
-        paramNames.add("in_"+name);
-        paramValues.add(value);
+        params.add(new Param("in_" + name, value));
     }
 /*
     public void addLookupParam(Lookup lookup){
@@ -187,8 +175,7 @@ public class Internet {
     }
     */
     public void addDoubleParamNameValue(String name, Double value){
-        paramNames.add("in_"+name);
-        paramValues.add(value.toString().replace(".",","));
+        params.add(new Param("in_" + name, value.toString().replace(".", ",")));
     }
 /*
     public void addDatePickParam(DatePick datePick){
@@ -204,14 +191,11 @@ public class Internet {
     public class HTTPRequestTask extends AsyncTask<String, Void, String> {
 
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(String... parameters) {
 
             String result = "";
-
-
             try {
-
-                String urlString = Global.HTTP + params[0];
+                String urlString = Global.HTTP + parameters[0];
                 URL url = new URL(urlString);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setReadTimeout(Global.TIMEOUT);
@@ -223,12 +207,11 @@ public class Internet {
                 connection.setRequestProperty("Authorization", "Basic "+Global.CREDENTIALS);
                 connection.setRequestProperty("Accept-Charset", "UTF-8");
                 String urlParams = "auth=" +Global.COMPANY+","+ Global.googleAccount;
-                for(int i=0;i<paramNames.size();i++){
-                    urlParams = urlParams + "&" + paramNames.get(i) + "=" + URLEncoder.encode(paramValues.get(i),"UTF-8");
+                for(int i=0;i<params.size();i++){
+                    urlParams = urlParams + params.get(i).getPair();
                 }
-Utils.log(urlString + "?" + urlParams);
-                paramNames.clear();
-                paramValues.clear();
+                Utils.log(urlString + "?" + urlParams);
+                params.clear();
                 connection.setRequestProperty("Content-Length", "" + Integer.toString(urlParams.getBytes().length));
                 DataOutputStream dos = new DataOutputStream(connection.getOutputStream());
                 dos.writeBytes(urlParams);
@@ -244,8 +227,7 @@ Utils.log(urlString + "?" + urlParams);
                 }
                 br.close();
                 result = response.toString();
-Utils.log(result);
-
+                Utils.log(parameters[0] + " = " + result);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -255,12 +237,12 @@ Utils.log(result);
 
         @Override
         protected void onPostExecute(String result) {
-
             super.onPostExecute(result);
         }
+
         @Override
         protected void onCancelled(){
-            Log.d("timur","interrupted");
+            Utils.log("interrupted");
         }
 
     }
