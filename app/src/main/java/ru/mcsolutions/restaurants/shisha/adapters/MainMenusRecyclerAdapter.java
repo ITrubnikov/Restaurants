@@ -5,11 +5,15 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 
 import java.util.ArrayList;
 
@@ -25,6 +29,7 @@ public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecy
         AppCompatTextView textViewName;
         AppCompatTextView textViewImageName;
         AppCompatImageView imageView;
+        CardView cardView;
 
         public MainMenusViewHolder(View itemView) {
             super(itemView);
@@ -32,6 +37,7 @@ public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecy
             this.textViewName = (AppCompatTextView) itemView.findViewById(R.id.textViewName);
             this.textViewImageName = (AppCompatTextView) itemView.findViewById(R.id.textViewImageName);
             this.imageView = (AppCompatImageView) itemView.findViewById(R.id.imageView);
+            cardView=(CardView)itemView.findViewById(R.id.cardviewmenu);
         }
     }
 
@@ -54,6 +60,7 @@ public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecy
 
     @Override
     public void onBindViewHolder(final MainMenusViewHolder viewHolder, final int position) {
+        YoYo.with(Techniques.BounceInUp).playOn(viewHolder.cardView);
 
         AppCompatTextView textViewId = viewHolder.textViewId;
         textViewId.setText(mainMenus.get(position).getId());
