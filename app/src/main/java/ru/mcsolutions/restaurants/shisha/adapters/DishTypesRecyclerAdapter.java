@@ -2,6 +2,8 @@ package ru.mcsolutions.restaurants.shisha.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,21 +23,25 @@ public class DishTypesRecyclerAdapter extends RecyclerView.Adapter<DishTypesRecy
         AppCompatTextView textViewId;
         AppCompatTextView textViewName;
         AppCompatTextView textViewImageName;
+        AppCompatImageView imageView;
 
         public DishTypesViewHolder(View itemView) {
             super(itemView);
             this.textViewId = (AppCompatTextView) itemView.findViewById(R.id.textViewId);
             this.textViewName = (AppCompatTextView) itemView.findViewById(R.id.textViewName);
             this.textViewImageName = (AppCompatTextView) itemView.findViewById(R.id.textViewImageName);
+            this.imageView = (AppCompatImageView) itemView.findViewById(R.id.imageView);
         }
     }
 
-    private final Context context;
-    private final ArrayList<DishType> dishTypes;
+    private Context context;
+    private ArrayList<DishType> dishTypes;
+    private Resources resources;
 
     public DishTypesRecyclerAdapter(Context context, ArrayList<DishType> dishTypes) {
         this.context = context;
         this.dishTypes = dishTypes;
+        resources =  context.getResources();
     }
 
     @Override
@@ -47,14 +53,27 @@ public class DishTypesRecyclerAdapter extends RecyclerView.Adapter<DishTypesRecy
 
     @Override
     public void onBindViewHolder(DishTypesViewHolder viewHolder, int position) {
+
         AppCompatTextView textViewId = viewHolder.textViewId;
         final String idDishType = dishTypes.get(position).getId();
         textViewId.setText(idDishType);
+
         AppCompatTextView textViewName = viewHolder.textViewName;
         final String dishType = dishTypes.get(position).getName();
         textViewName.setText(dishType);
+
         AppCompatTextView textViewImageName = viewHolder.textViewImageName;
+        String imageName = dishTypes.get(position).getImageName();
         textViewImageName.setText(dishTypes.get(position).getImageName());
+
+        AppCompatImageView imageView = viewHolder.imageView;
+        int resourceId = resources.getIdentifier(imageName, "drawable", context.getPackageName());
+        if(resourceId == 0){
+            imageView.setImageDrawable(resources.getDrawable(R.drawable.food));
+        }else{
+            imageView.setImageDrawable(resources.getDrawable(resourceId));
+        }
+
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

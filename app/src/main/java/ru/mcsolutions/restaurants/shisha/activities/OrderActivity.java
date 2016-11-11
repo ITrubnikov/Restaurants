@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import ru.mcsolutions.restaurants.shisha.R;
+import ru.mcsolutions.restaurants.shisha.adapters.OrderDishesRecyclerAdapter;
 import ru.mcsolutions.restaurants.shisha.tools.Global;
 import ru.mcsolutions.restaurants.shisha.tools.Internet;
 import ru.mcsolutions.restaurants.shisha.tools.Utils;
@@ -34,8 +35,9 @@ public class OrderActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-//        OrderDishesRecyclerAdapter dishTypesRecyclerAdapter = new DishTypesRecyclerAdapter(context, Global.currentOrder.orderDishes);
-//        recyclerView.setAdapter(dishTypesRecyclerAdapter);
+        OrderDishesRecyclerAdapter dishTypesRecyclerAdapter =
+                new OrderDishesRecyclerAdapter(context, Global.currentOrder.orderDishes, Global.currentOrder.portions, textViewTotal, textViewPTotal);
+        recyclerView.setAdapter(dishTypesRecyclerAdapter);
 
         textViewCaption = (AppCompatTextView) findViewById(R.id.textViewCaption);
         textViewTotal = (AppCompatTextView) findViewById(R.id.textViewTotal);

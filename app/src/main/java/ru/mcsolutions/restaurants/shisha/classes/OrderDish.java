@@ -10,7 +10,7 @@ public class OrderDish {
     String idDish, dish, idStatus;
     int count, priority, portion;
     Double price;
-    Date portionDate, planDate, deliveryDate;
+    Date planDate, deliveryDate;
 
     public OrderDish(){
         idDish = "";
@@ -18,9 +18,8 @@ public class OrderDish {
         count = 0;
         priority = -1;
         portion = 1;
-        price = new Double(0);
+        price = null;
         idStatus = "1";
-        portionDate = null;
         planDate = null;
         deliveryDate = null;
     }
@@ -33,7 +32,6 @@ public class OrderDish {
         this.portion = portion;
         price = new Double(0);
         this.idStatus = "1";
-        this.portionDate = null;
         this.planDate = null;
         this.deliveryDate = null;
     }
@@ -91,24 +89,18 @@ public class OrderDish {
     public void setIdStatus(String idStatus){this.idStatus = idStatus;}
     public String getIdStatus(){return idStatus;}
 
-    public void setPortionDate(String portionDate) throws ParseException {
-        this.portionDate = Global.simpleDateFormat.parse(portionDate);
-    }
-    public void setPortionDate(Date portionDate) {
-        this.portionDate = portionDate;
-    }
-    public Date getPortionDate(){
-        return portionDate;
-    }
-
     public void setPlanDate(String planDate)throws ParseException {
-        this.planDate = Global.simpleDateFormat.parse(planDate);
+        if(!planDate.equals("")){
+            this.planDate = Global.simpleDateTimeFormat.parse(planDate);
+        }
     }
     public Date getPlanDate(){return planDate;}
 
 
     public void setDeliveryDate(String deliveryDate) throws ParseException {
+        if(!deliveryDate.equals("")) {
             this.deliveryDate = Global.simpleDateFormat.parse(deliveryDate);
+        }
     }
     public Date getDeliveryDate(){
         return deliveryDate;

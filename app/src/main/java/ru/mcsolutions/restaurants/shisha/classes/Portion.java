@@ -1,43 +1,47 @@
 package ru.mcsolutions.restaurants.shisha.classes;
 
+import java.text.ParseException;
 import java.util.Date;
+
+import ru.mcsolutions.restaurants.shisha.tools.Global;
 
 public class Portion {
 
     int portion;
-    Date date;
+    Date pDate;
     Double amount;
+
+    public Portion() {
+    }
 
     public Portion(int portion) {
         this.portion = portion;
         amount = new Double(0);
-        date = null;
+        pDate = null;
     }
 
-    public Portion(int portion, Date date, Double amount) {
+    public Portion(int portion, Date pDate, Double amount) {
         this.portion = portion;
-        this.date = date;
+        this.pDate = pDate;
         this.amount = amount;
     }
 
-    public void setPortion(int portion) {
-        this.portion = portion;
-    }
+    public void setPortion(String portion) { this.portion = Integer.valueOf(portion);}
     public int getPortion() {
         return portion;
     }
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
+    public void setAmount(Double amount) { this.amount = amount; }
+    public void setAmount(String amount) { this.amount = Double.valueOf(amount); }
     public Double getAmount() {
         return amount;
     }
 
-    public void setDate(Date Date) {
-        this.date = date;
+    public void setPDate(Date pDate) { this.pDate = pDate;}
+    public void setPDate(String pDate) throws ParseException {
+        this.pDate = Global.simpleDateTimeFormat.parse(pDate);
     }
     public Date getDate() {
-        return date;
+        return pDate;
     }
 }

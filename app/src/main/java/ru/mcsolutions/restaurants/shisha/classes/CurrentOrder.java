@@ -36,9 +36,8 @@ public class CurrentOrder {
         this.idOrder = idOrder;
     }
 
-    public int getCurrentPortion(){
-        return currentPortion;
-    }
+//    public void setCurrentPortion(int currentPortion){this.currentPortion = currentPortion; }
+//    public int getCurrentPortion(){ return currentPortion; }
     public void setNextPortion(){
         currentPortion = currentPortion + 1;
     }
@@ -85,7 +84,7 @@ public class CurrentOrder {
 
     public void setPortionDateAmount(){
         Portion portion = portions.get(currentPortion);
-        portion.setDate(new Date());
+        portion.setPDate(new Date());
         portion.setAmount(getPTotal());
     }
 

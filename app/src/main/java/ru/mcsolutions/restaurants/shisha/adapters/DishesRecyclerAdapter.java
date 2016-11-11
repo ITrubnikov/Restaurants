@@ -1,7 +1,9 @@
 package ru.mcsolutions.restaurants.shisha.adapters;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,6 +27,7 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
         AppCompatTextView textViewPrice;
         AppCompatTextView textViewWeight;
         AppCompatTextView textViewMinutes;
+        AppCompatImageView imageView;
         AppCompatButton buttonMinus;
         AppCompatButton buttonPlus;
         AppCompatTextView textViewCount;
@@ -37,6 +40,7 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
             this.textViewPrice = (AppCompatTextView) itemView.findViewById(R.id.textViewPrice);
             this.textViewWeight = (AppCompatTextView) itemView.findViewById(R.id.textViewWeight);
             this.textViewMinutes = (AppCompatTextView) itemView.findViewById(R.id.textViewMinutes);
+            this.imageView = (AppCompatImageView) itemView.findViewById(R.id.imageView);
             this.buttonMinus = (AppCompatButton) itemView.findViewById(R.id.buttonMinus);
             this.buttonPlus = (AppCompatButton) itemView.findViewById(R.id.buttonPlus);
             this.textViewCount = (AppCompatTextView) itemView.findViewById(R.id.textViewCount);
@@ -47,6 +51,7 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
     private final ArrayList<Dish> dishes;
     AppCompatTextView textViewTotal;
     AppCompatTextView textViewPTotal;
+    private Resources resources;
 
     public DishesRecyclerAdapter(
             Context context,
@@ -69,6 +74,7 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
         Utils.log(dishes.size());
         this.textViewTotal = textViewTotal;
         this.textViewPTotal = textViewPTotal;
+        resources =  context.getResources();
     }
 
     @Override
@@ -103,6 +109,14 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
         AppCompatTextView textViewMinutes = viewHolder.textViewMinutes;
         String minutes = dishes.get(position).getMinutes();
         textViewMinutes.setText("Время приготовления " + minutes + " минут");
+
+        AppCompatImageView imageView = viewHolder.imageView;
+        int resourceId = resources.getIdentifier(imageName, "drawable", context.getPackageName());
+        if(resourceId == 0){
+            imageView.setImageDrawable(resources.getDrawable(R.drawable.food));
+        }else{
+            imageView.setImageDrawable(resources.getDrawable(resourceId));
+        }
 
         AppCompatButton buttonMinus = viewHolder.buttonMinus;
         AppCompatButton buttonPlus = viewHolder.buttonPlus;

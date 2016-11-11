@@ -112,7 +112,7 @@ public class Internet {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CUPCAKE) {
                         while(getStatus() != AsyncTask.Status.FINISHED){
                             try {
-                                TimeUnit.MILLISECONDS.sleep(200);
+                                TimeUnit.MILLISECONDS.sleep(100);
                                 handler.sendEmptyMessage(Global.HTTP_PENDING);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();

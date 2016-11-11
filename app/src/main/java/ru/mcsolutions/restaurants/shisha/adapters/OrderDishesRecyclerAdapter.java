@@ -39,11 +39,29 @@ public class OrderDishesRecyclerAdapter extends RecyclerView.Adapter<OrderDishes
         }
     }
 
+    class Card{
+
+        int portion;
+        String idOrderDish;
+
+        public Card(int portion){
+            this.portion = portion;
+            this.idOrderDish = null;
+        }
+        public Card(int portion, String idOrderDish){
+            this.portion = portion;
+            this.idOrderDish = idOrderDish;
+        }
+        public int getPortion(){return portion;}
+        public String getIdOrderDish(){return idOrderDish;}
+    }
+
     Context context;
     ArrayList<OrderDish> orderDishes;
     ArrayList<Portion> portions;
     AppCompatTextView textViewTotal;
     AppCompatTextView textViewPTotal;
+    ArrayList<Card> cards;
 
     public OrderDishesRecyclerAdapter(Context context
             , ArrayList<OrderDish> orderDishes
@@ -52,23 +70,26 @@ public class OrderDishesRecyclerAdapter extends RecyclerView.Adapter<OrderDishes
             , AppCompatTextView textViewPTotal) {
         this.context = context;
         this.orderDishes = orderDishes;
+        this.portions = portions;
         this.textViewTotal = textViewTotal;
         this.textViewPTotal = textViewPTotal;
-        portions = new ArrayList<Portion>();
-//        portions.add(new Portion());
-/*        ArrayList<Integer> pors = new ArrayList<Integer>();
-        for(int i=0;i<orderDishes.size();i++){
-            Portion portion = portions.get(i);
-            int p = portion.getPortion();
-            if(pors.indexOf(p)==0){
-                pors.add(p);
-                portions.add(new Portion(portion.getPortion(),portion.getDate(),portion.getAmount()));
+        cards = new ArrayList<Card>();
+        int s = portions.size();
+        for(int i=0;i<s;i++){
+            int portion = s - i;
+            cards.add(new Card(portion));
+            for(int j=0;j<orderDishes.size();j++){
+                OrderDish orderDish = orderDishes.get(j);
+                if(orderDish.getPortion() == portion){
+
+                }
             }
-        }*/
+        }
+        cards.remove(0);
     }
 
     @Override
-    public OrderDishesRecyclerAdapter.OrderDishesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public OrderDishesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return null;
     }
 
@@ -79,6 +100,6 @@ public class OrderDishesRecyclerAdapter extends RecyclerView.Adapter<OrderDishes
 
     @Override
     public int getItemCount() {
-        return orderDishes.size() + portions.size() - 1;
+        return cards.size();
     }
 }

@@ -263,6 +263,46 @@ public class Parsers {
         return dishes;
     }
 
+    public ArrayList<Portion> getPortion(String xml) throws XmlPullParserException, IOException, ParseException {
+        ArrayList<Portion> portions = new ArrayList<Portion>();
+        xpp.setInput(new StringReader(xml));
+        Portion portion = null;
+        while (xpp.getEventType() != XmlPullParser.END_DOCUMENT) {
+            switch (xpp.getEventType()) {
+                case XmlPullParser.START_TAG:
+                    if(xpp.getName().equals("row") && xpp.getDepth()==2) {
+                        portion = new Portion();
+                    }else{
+                        if (xpp.getDepth() == 3) {
+                            String startTag = xpp.getName();
+                            xpp.next();
+                            String value = xpp.getText();
+                            if(value==null){
+                                value = "";
+                            }
+                            switch(startTag){
+                                case "portion":             portion.setPortion(value);  break;
+                                case "pdate":               portion.setPDate(value);     break;
+                                case "amount":              portion.setAmount(value);   break;
+                                default: break;
+                            }
+                        }
+                    };
+                    break;
+                case XmlPullParser.END_TAG:
+                    if(xpp.getName().equals("row")){
+                        portions.add(portion);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            xpp.next();
+        }
+        Utils.log("portions.size() = " + portions.size());
+        return portions;
+    }
+
     public ArrayList<OrderDish> getOrderDishes(String xml) throws XmlPullParserException, IOException, ParseException {
         ArrayList<OrderDish> orderDishes = new ArrayList<OrderDish>();
         xpp.setInput(new StringReader(xml));
@@ -284,7 +324,6 @@ public class Parsers {
                                 case "iddish":              orderDish.setIdDish(value);          break;
                                 case "dish":                orderDish.setDish(value);        break;
                                 case "portion":             orderDish.setPortion(value);    break;
-                                case "portiondate":         orderDish.setPortionDate(value);     break;
                                 case "count":               orderDish.setCount(value);      break;
                                 case "price":               orderDish.setPrice(value);   break;
                                 case "priority":            orderDish.setPriority(value);   break;

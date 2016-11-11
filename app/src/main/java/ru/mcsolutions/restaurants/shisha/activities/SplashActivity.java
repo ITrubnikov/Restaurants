@@ -21,6 +21,8 @@ import android.widget.VideoView;
 import java.io.IOException;
 
 import ru.mcsolutions.restaurants.shisha.R;
+import ru.mcsolutions.restaurants.shisha.classes.Order;
+import ru.mcsolutions.restaurants.shisha.classes.Portion;
 import ru.mcsolutions.restaurants.shisha.tools.Global;
 import ru.mcsolutions.restaurants.shisha.tools.Internet;
 import ru.mcsolutions.restaurants.shisha.tools.Utils;
@@ -109,6 +111,77 @@ public class SplashActivity extends AppCompatActivity {
                                         finish();
                                     } else {
                                         Global.currentOrder.orders = Global.parsers.getOrders(result);
+                                        if(Global.currentOrder.orders.size()>0){
+                                            Order order = Global.currentOrder.orders.get(0);
+                                            String idOrderStatus = order.getIdOrderStatus();
+                                            String idOrder = order.getId();
+                                            switch(idOrder){
+                                                case "1":
+                                                case "2":
+                                                {
+                                                    final Internet internet = new Internet(context);
+                                                    Handler handler = new Handler() {
+                                                        public void handleMessage(Message message) {
+                                                            try {
+                                                                switch (message.what) {
+                                                                    case Global.HTTP_PENDING:
+                                                                        break;
+                                                                    case Global.HTTP_FINISHED:
+                                                                        String result = internet.result;
+                                                                        if (result.startsWith("-1;")) {
+                                                                            Toast.makeText(context, result.substring(3), Toast.LENGTH_LONG).show();
+                                                                            finish();
+                                                                        } else {
+                                                                            Global.currentOrder.portions = Global.parsers.getPortion(result);
+                                                                            int currentPortion = Global.currentOrder.portions.size() + 1;
+                                                                            Global.currentOrder.portions.add(new Portion(currentPortion));
+                                                                        }
+                                                                        break;
+                                                                }
+                                                            } catch (Exception e) {
+                                                                Utils.log(e.getMessage());
+                                                            }
+                                                        }
+
+                                                    };
+                                                    internet.addParamNameValue("idOrder", idOrder);
+                                                    internet.startURL("clients.getOrderPortions", handler);
+                                                }
+                                                {
+                                                    final Internet internet = new Internet(context);
+                                                    Handler handler = new Handler() {
+                                                        public void handleMessage(Message message) {
+                                                            try {
+                                                                switch (message.what) {
+                                                                    case Global.HTTP_PENDING:
+                                                                        break;
+                                                                    case Global.HTTP_FINISHED:
+                                                                        String result = internet.result;
+                                                                        if (result.startsWith("-1;")) {
+                                                                            Toast.makeText(context, result.substring(3), Toast.LENGTH_LONG).show();
+                                                                            finish();
+                                                                        } else {
+                                                                            Global.currentOrder.orderDishes = Global.parsers.getOrderDishes(result);
+                                                                        }
+                                                                        break;
+                                                                }
+                                                            } catch (Exception e) {
+                                                                Utils.log(e.getMessage());
+                                                            }
+                                                        }
+
+                                                    };
+                                                    internet.addParamNameValue("idOrder", idOrder);
+                                                    internet.startURL("clients.getOrderDishes", handler);
+                                                }
+                                                    break;
+                                                case "3": break;//Все хорошо
+                                                case "4":
+                                                    Toast.makeText(context, "Вы не оплатили последний зака. Вы редиска", Toast.LENGTH_LONG).show();
+                                                    finish();
+                                                    break;
+                                            }
+                                        }
                                     }
                                     break;
                             }
