@@ -1,5 +1,6 @@
 package ru.mcsolutions.restaurants.shisha.activities;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.transition.Fade;
 import android.transition.Slide;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.animation.AccelerateInterpolator;
 
 import ru.mcsolutions.restaurants.shisha.R;
 import ru.mcsolutions.restaurants.shisha.adapters.DishTypesRecyclerAdapter;
@@ -29,7 +32,7 @@ public class DishTypesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dish_types);
-        setupWindowAnimations();
+
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -51,6 +54,7 @@ public class DishTypesActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
 
     @Override
@@ -60,15 +64,27 @@ public class DishTypesActivity extends AppCompatActivity {
         textViewPTotal.setText(Global.decimalFormat.format(Global.currentOrder.getPTotal()));
     }
 
-    private void setupWindowAnimations() {
+    /*private void setupWindowAnimations() {
         Fade fade = new Fade();
-        fade.setDuration(1000);
+        fade.setDuration(3000);
         Slide slide = new Slide();
-        slide.setDuration(1000);
+        slide.setDuration(3000);
         getWindow().setEnterTransition(slide);
 
 
         getWindow().setReturnTransition(fade);
+    }*/
+
+    private void animateRevealShow(View viewRoot) {
+        int cx = (viewRoot.getLeft() + viewRoot.getRight()) / 2;
+        int cy = (viewRoot.getTop() + viewRoot.getBottom()) / 2;
+        int finalRadius = Math.max(viewRoot.getWidth(), viewRoot.getHeight());
+
+        Animator anim = ViewAnimationUtils.createCircularReveal(viewRoot, cx, cy, 0, finalRadius);
+        viewRoot.setVisibility(View.VISIBLE);
+        anim.setDuration(1000);
+        anim.setInterpolator(new AccelerateInterpolator());
+        anim.start();
     }
 
 }

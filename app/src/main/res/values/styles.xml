@@ -17,6 +17,8 @@
         <item name="android:statusBarColor">@color/material_animations_primary_dark</item>
         <item name="android:textColor">@color/text_dark</item>
         <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowEnterTransition">@transition/change_image_transform</item>
+        <item name="android:windowExitTransition">@transition/change_image_transform</item>
 
         <item name="android:titleTextAppearance">@style/MaterialAnimations.TextAppearance.Title
         </item>
