@@ -1,12 +1,19 @@
 package ru.mcsolutions.restaurants.shisha.adapters;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+
+import android.transition.Fade;
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,18 +69,18 @@ public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecy
     public void onBindViewHolder(final MainMenusViewHolder viewHolder, final int position) {
         YoYo.with(Techniques.BounceInUp).playOn(viewHolder.cardView);
 
-        AppCompatTextView textViewId = viewHolder.textViewId;
+        final AppCompatTextView textViewId = viewHolder.textViewId;
         textViewId.setText(mainMenus.get(position).getId());
-        AppCompatTextView textViewName = viewHolder.textViewName;
+        final AppCompatTextView textViewName = viewHolder.textViewName;
 
         final String name = mainMenus.get(position).getName();
         textViewName.setText(name);
 
         AppCompatTextView textViewImageName = viewHolder.textViewImageName;
-        String imageName = mainMenus.get(position).getImageName();
+        final String imageName = mainMenus.get(position).getImageName();
         textViewImageName.setText(imageName);
 
-        AppCompatImageView imageView = viewHolder.imageView;
+        final AppCompatImageView imageView = viewHolder.imageView;
         int resourceId = resources.getIdentifier(imageName, "drawable", context.getPackageName());
         if(resourceId == 0){
             imageView.setImageDrawable(resources.getDrawable(R.drawable.food));
@@ -88,12 +95,25 @@ public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecy
 //                    case "Афиша":
 //                      break;
                     case "Меню":
+
                         Intent intent = new Intent(context, DishTypesActivity.class);
-                        context.startActivity(intent);
+
+
+                        ActivityOptions options = ActivityOptions
+                                .makeSceneTransitionAnimation(
+                                        (Activity) context,
+                                        imageView,
+                                        "image_transition");
+                        // Работающий способ на один элемент
+
+                        context.startActivity(intent, options.toBundle());
+
+
                         break;
                     case "Мои заказы":
                         break;
                     default:
+
                         Toast.makeText(context, name + " еще не разработано", Toast.LENGTH_LONG).show();
                 }
 
@@ -105,5 +125,6 @@ public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecy
     public int getItemCount() {
         return mainMenus.size();
     }
+
 
 }

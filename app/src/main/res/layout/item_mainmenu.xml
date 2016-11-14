@@ -32,7 +32,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="Name"/>
+            android:text="Name"
+            android:transitionName="text_viev_transition"/>
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textViewImageName"
@@ -48,6 +49,7 @@
             android:layout_height="80dp"
             android:src="@drawable/common_ic_googleplayservices"
             android:layout_gravity="center"
+            android:transitionName="image_transition"
             />
     </LinearLayout>
 

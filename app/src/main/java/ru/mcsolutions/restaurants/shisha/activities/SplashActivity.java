@@ -3,6 +3,7 @@ package ru.mcsolutions.restaurants.shisha.activities;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -13,6 +14,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,12 +36,18 @@ public class SplashActivity extends AppCompatActivity {
     LocationManager locationManager;
     Context context = this;
     TextView textViewGPSCaption;
+    SharedPreferences prefs = null;
+    private static final int PERMISSION_REQUEST_CODE = 0;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         getSupportActionBar().hide();
+
+
 
         videoView = (VideoView) findViewById(R.id.videoView);
         videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.shi));
@@ -57,6 +66,7 @@ public class SplashActivity extends AppCompatActivity {
                         &&
                         ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(context, "Нет разрешений на GPS и GPS от сети", Toast.LENGTH_LONG).show();
+       /*     requestMultiplePermissions();*/
             finish();
         } else {
             locationManager.requestLocationUpdates(
@@ -239,6 +249,9 @@ public class SplashActivity extends AppCompatActivity {
             };
             new Handler().postDelayed(runnable, 5000);//5 секунд
         }
+        prefs = getSharedPreferences("ru.mcsolutions.restaurants.shisha", MODE_PRIVATE);
+
+
     }
 
     private LocationListener locationListener = new LocationListener() {
@@ -284,7 +297,7 @@ public class SplashActivity extends AppCompatActivity {
             if (location == null) {
                 return;
             } else {
-                Utils.log("Real location: " + location.getLatitude() + ", " + location.getLongitude());
+                             Utils.log("Real location: " + location.getLatitude() + ", " + location.getLongitude());
                 if (
                         ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                         &&
@@ -398,5 +411,37 @@ public class SplashActivity extends AppCompatActivity {
         super.onPause();
         finish();
     }
+
+/*    @Override
+    protected void onResume() {
+        super.onResume();
+        if (prefs.getBoolean("firstrun", true)) {
+            // При первом запуске (или если юзер удалял все данные приложения)
+            // мы попадаем сюда. Делаем что-то
+//и после действия записывам false в переменную firstrun
+//Итого при следующих запусках этот код не вызывается.
+            requestMultiplePermissions();
+            prefs.edit().putBoolean("firstrun", false).commit();
+        }
+    }*/
+
+    /*public void requestMultiplePermissions() {
+        ActivityCompat.requestPermissions(this,
+                new String[] {
+                        Manifest.permission.INTERNET,
+                        Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.ACCESS_NETWORK_STATE,
+                        Manifest.permission.GET_ACCOUNTS,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.CALL_PHONE,
+                        Manifest.permission.ACCESS_WIFI_STATE,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+
+                },
+                PERMISSION_REQUEST_CODE);
+    }*/
+
+
 
 }

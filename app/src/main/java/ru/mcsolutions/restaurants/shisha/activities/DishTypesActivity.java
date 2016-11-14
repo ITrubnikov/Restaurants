@@ -8,6 +8,8 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.view.View;
 
 import ru.mcsolutions.restaurants.shisha.R;
@@ -27,6 +29,7 @@ public class DishTypesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dish_types);
+        setupWindowAnimations();
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -55,6 +58,17 @@ public class DishTypesActivity extends AppCompatActivity {
         super.onResume();
         textViewTotal.setText(Global.decimalFormat.format(Global.currentOrder.getTotal()));
         textViewPTotal.setText(Global.decimalFormat.format(Global.currentOrder.getPTotal()));
+    }
+
+    private void setupWindowAnimations() {
+        Fade fade = new Fade();
+        fade.setDuration(1000);
+        Slide slide = new Slide();
+        slide.setDuration(1000);
+        getWindow().setEnterTransition(slide);
+
+
+        getWindow().setReturnTransition(fade);
     }
 
 }

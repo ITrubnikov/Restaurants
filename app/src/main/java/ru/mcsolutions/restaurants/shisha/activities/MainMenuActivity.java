@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.widget.TextView;
 
 import ru.mcsolutions.restaurants.shisha.R;
@@ -21,6 +23,8 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
+
+
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -29,5 +33,9 @@ public class MainMenuActivity extends AppCompatActivity {
 
         textViewLocation = (TextView) findViewById(R.id.textViewLocation);
         textViewLocation.setText(Global.location.getName());
+
     }
+
+
+
 }
