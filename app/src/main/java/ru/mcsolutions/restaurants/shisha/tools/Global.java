@@ -4,6 +4,7 @@ import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.util.Base64;
@@ -21,6 +22,7 @@ public class Global {
 
     public static double latitude=0;
     public static double longitude=0;
+    public static SharedPreferences prefs = null;
 
     public static String PACKNAME = "";
     public static String googleAccount = "";

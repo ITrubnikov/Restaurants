@@ -26,6 +26,8 @@ import ru.mcsolutions.restaurants.shisha.tools.Global;
 import ru.mcsolutions.restaurants.shisha.tools.Internet;
 import ru.mcsolutions.restaurants.shisha.tools.Utils;
 
+import static ru.mcsolutions.restaurants.shisha.tools.Global.prefs;
+
 public class SplashActivity extends AppCompatActivity {
     VideoView videoView;
     View decorView;
@@ -36,8 +38,30 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        prefs = getSharedPreferences("ru.mcsolutions.restaurants.shisha", MODE_PRIVATE);
         setContentView(R.layout.activity_splash);
         getSupportActionBar().hide();
+
+        if (prefs.getBoolean("firstrun", true)) {
+            Intent intent = new Intent(context, PermissionsActiviry.class);
+            startActivity(intent);
+            // При первом запуске (или если юзер удалял все данные приложения)
+            // мы попадаем сюда. Делаем что-то
+//и после действия записывам false в переменную firstrun
+//Итого при следующих запусках этот код не вызывается.
+            prefs.edit().putBoolean("firstrun", false).commit();
+        }else {
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(context, MainMenuActivity.class);
+                    startActivity(intent);
+                }
+            };
+            new Handler().postDelayed(runnable, 5000);//5 секунд
+        }
+
+
 
         videoView = (VideoView) findViewById(R.id.videoView);
         videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.shi));
@@ -232,16 +256,7 @@ public class SplashActivity extends AppCompatActivity {
                 Toast.makeText(context, Global.INTERNET_NOT_AVAILABLE, Toast.LENGTH_LONG).show();
             }
         }
-        {
-            Runnable runnable = new Runnable() {
-                @Override
-                public void run() {
-                    Intent intent = new Intent(context, MainMenuActivity.class);
-                    startActivity(intent);
-                }
-            };
-            new Handler().postDelayed(runnable, 5000);//5 секунд
-        }
+
     }
 
     private LocationListener locationListener = new LocationListener() {
