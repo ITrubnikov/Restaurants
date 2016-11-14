@@ -1,4 +1,4 @@
-package ru.mcsolutions.restaurants.shisha.classes;
+package ru.mcsolutions.restaurants.shisha.tools;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -10,8 +10,14 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import ru.mcsolutions.restaurants.shisha.tools.Global;
-import ru.mcsolutions.restaurants.shisha.tools.Utils;
+import ru.mcsolutions.restaurants.shisha.classes.Dish;
+import ru.mcsolutions.restaurants.shisha.classes.DishType;
+import ru.mcsolutions.restaurants.shisha.classes.Location;
+import ru.mcsolutions.restaurants.shisha.classes.MainMenu;
+import ru.mcsolutions.restaurants.shisha.classes.Order;
+import ru.mcsolutions.restaurants.shisha.classes.OrderDish;
+import ru.mcsolutions.restaurants.shisha.classes.Portion;
+import ru.mcsolutions.restaurants.shisha.classes.TotalOrderDish;
 
 public class Parsers {
 
@@ -154,6 +160,9 @@ public class Parsers {
                                     break;
                                 case "pdate":
                                     order.setPDate(value);
+                                    break;
+                                case "amount":
+                                    order.setAmount(value);
                                     break;
                                 default: break;
                             }
@@ -322,7 +331,6 @@ public class Parsers {
                             }
                             switch(startTag){
                                 case "iddish":              orderDish.setIdDish(value);          break;
-                                case "dish":                orderDish.setDish(value);        break;
                                 case "portion":             orderDish.setPortion(value);    break;
                                 case "count":               orderDish.setCount(value);      break;
                                 case "price":               orderDish.setPrice(value);   break;

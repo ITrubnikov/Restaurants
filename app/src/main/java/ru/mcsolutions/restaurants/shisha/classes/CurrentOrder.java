@@ -35,11 +35,19 @@ public class CurrentOrder {
     public void setIdOrder(String idOrder) {
         this.idOrder = idOrder;
     }
+    public String getIdOrder(){
+        return idOrder;
+    }
 
 //    public void setCurrentPortion(int currentPortion){this.currentPortion = currentPortion; }
-//    public int getCurrentPortion(){ return currentPortion; }
+    public int getCurrentPortion(){ return currentPortion; }
     public void setNextPortion(){
+        portions.add(new Portion());
         currentPortion = currentPortion + 1;
+    }
+
+    public void setPAmount(Double amount){
+        portions.get(portions.size()-1).setAmount(amount);
     }
 
     public void addDish(String idDish){
@@ -71,19 +79,25 @@ public class CurrentOrder {
         for(int i = 0;i<orderDishes.size();i++){
             OrderDish orderDish = orderDishes.get(i);
             if(orderDish.getIdDish().equals(idDish) && currentPortion == orderDish.getPortion()){
-                if(count == 0){
-                    orderDishes.remove(i);
-                }else{
-                    orderDish.setCount(count);
-                }
+                orderDish.setCount(count);
                 return;
             }
         }
         orderDishes.add(new OrderDish(idDish, count, -1, currentPortion));
     }
 
+    public void removeEmptyDishes(){
+        for(int i = 0;i<orderDishes.size();i++){
+            OrderDish orderDish = orderDishes.get(i);
+            if(currentPortion == orderDish.getPortion() && orderDish.getCount() == 0){
+                orderDishes.remove(i);
+                return;
+            }
+        }
+    };
+
     public void setPortionDateAmount(){
-        Portion portion = portions.get(currentPortion);
+        Portion portion = portions.get(currentPortion - 1);
         portion.setPDate(new Date());
         portion.setAmount(getPTotal());
     }
@@ -112,8 +126,19 @@ public class CurrentOrder {
         String result = "";
         for(int i=0;i<orderDishes.size();i++){
             OrderDish orderDish = orderDishes.get(i);
-            if(orderDish.getPortion() == currentPortion){
+            if(orderDish.getPortion() == currentPortion && orderDish.getCount()>0){
                 result = result + orderDish.getString() + ";";
+            }
+        }
+        return result;
+    }
+
+    public Dish getDish(String idDish){
+        Dish result = null;
+        for(int i=0;i<dishes.size();i++){
+            Dish dish = dishes.get(i);
+            if(dish.getIdDish().equals(idDish)){
+                return dish;
             }
         }
         return result;

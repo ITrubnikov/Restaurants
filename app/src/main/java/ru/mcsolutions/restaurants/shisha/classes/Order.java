@@ -18,7 +18,7 @@ public class Order {
         id = "";
         name = "";
         idOrderStatus = "";
-        amount = new Double(0);
+        amount = null;
         oDate = null;
         pDate = null;
         idLocation = "";
@@ -41,13 +41,15 @@ public class Order {
     public void setIdWorkDay(String idWorkDay) {this.idWorkDay = idWorkDay;}
     public String getIdWorkDay() {return idWorkDay;}
 
-    public void setAmount(String amount) {this.amount = Double.valueOf(amount);}
+    public void setAmount(String amount) {
+        if(!amount.equals("")){
+            this.amount = Double.valueOf(amount);
+        }
+    }
     public Double getAmount() {return amount;}
 
     public void setODate(String oDate) throws ParseException {
-        if(oDate.equals("")){
-            oDate = null;
-        }else{
+        if(!oDate.equals("")){
             this.oDate = Global.simpleDateTimeFormat.parse(oDate);
         }
     }

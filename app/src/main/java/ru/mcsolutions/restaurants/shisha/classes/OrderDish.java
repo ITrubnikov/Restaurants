@@ -7,14 +7,13 @@ import ru.mcsolutions.restaurants.shisha.tools.Global;
 
 public class OrderDish {
 
-    String idDish, dish, idStatus;
+    String idDish, idStatus;
     int count, priority, portion;
     Double price;
     Date planDate, deliveryDate;
 
     public OrderDish(){
         idDish = "";
-        dish = "";
         count = 0;
         priority = -1;
         portion = 1;
@@ -26,7 +25,6 @@ public class OrderDish {
 
     public OrderDish(String idDish, int count, int priority, int portion) {
         this.idDish = idDish;
-        this.dish = "";
         this.count = count;
         this.priority = priority;
         this.portion = portion;
@@ -57,11 +55,6 @@ public class OrderDish {
     public void setIdDish(String idDish){this.idDish = idDish;}
     public String getIdDish(){
         return idDish;
-    }
-
-    public void setDish(String dish){this.dish = dish;}
-    public String getDish(){
-        return dish;
     }
 
     public void setCount(String count){this.count = Integer.valueOf(count);}

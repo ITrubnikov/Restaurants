@@ -131,10 +131,11 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
                     count--;
                     textViewCount.setText("" + count);
                     String idDish = dishes.get(position).getIdDish();
-//                    Global.currentOrder.deductDish(idDish);
                     Global.currentOrder.setDishCount(idDish, count);
                     textViewTotal.setText(Global.decimalFormat.format(Global.currentOrder.getTotal()));
-                    textViewPTotal.setText(Global.decimalFormat.format(Global.currentOrder.getPTotal()));
+                    Double pTotal = Global.currentOrder.getPTotal();
+                    textViewPTotal.setText(Global.decimalFormat.format(pTotal));
+                    Global.currentOrder.setPAmount(pTotal);
                     Utils.log(Global.currentOrder.getString());
                 }
             }
@@ -146,10 +147,11 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
                 count++;
                 textViewCount.setText("" + count);
                 String idDish = dishes.get(position).getIdDish();
-//                Global.currentOrder.addDish(idDish);
                 Global.currentOrder.setDishCount(idDish, count);
                 textViewTotal.setText(Global.decimalFormat.format(Global.currentOrder.getTotal()));
-                textViewPTotal.setText(Global.decimalFormat.format(Global.currentOrder.getPTotal()));
+                Double pTotal = Global.currentOrder.getPTotal();
+                textViewPTotal.setText(Global.decimalFormat.format(pTotal));
+                Global.currentOrder.setPAmount(pTotal);
                 Utils.log(Global.currentOrder.getString());
             }
         });

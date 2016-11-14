@@ -22,7 +22,6 @@ import java.io.IOException;
 
 import ru.mcsolutions.restaurants.shisha.R;
 import ru.mcsolutions.restaurants.shisha.classes.Order;
-import ru.mcsolutions.restaurants.shisha.classes.Portion;
 import ru.mcsolutions.restaurants.shisha.tools.Global;
 import ru.mcsolutions.restaurants.shisha.tools.Internet;
 import ru.mcsolutions.restaurants.shisha.tools.Utils;
@@ -111,14 +110,19 @@ public class SplashActivity extends AppCompatActivity {
                                         finish();
                                     } else {
                                         Global.currentOrder.orders = Global.parsers.getOrders(result);
+
                                         if(Global.currentOrder.orders.size()>0){
                                             Order order = Global.currentOrder.orders.get(0);
-                                            String idOrderStatus = order.getIdOrderStatus();
                                             String idOrder = order.getId();
-                                            switch(idOrder){
+                                            String idOrderStatus = order.getIdOrderStatus();
+                                            Utils.log("idOrderStatus = " + idOrderStatus);
+                                            switch(idOrderStatus){
                                                 case "1":
                                                 case "2":
                                                 {
+                                                    Utils.log("idOrder = " + idOrder);
+                                                    Global.currentOrder.setIdOrder(idOrder);
+                                                    Utils.log("idOrder = " + Global.currentOrder.getIdOrder());
                                                     final Internet internet = new Internet(context);
                                                     Handler handler = new Handler() {
                                                         public void handleMessage(Message message) {
@@ -133,8 +137,7 @@ public class SplashActivity extends AppCompatActivity {
                                                                             finish();
                                                                         } else {
                                                                             Global.currentOrder.portions = Global.parsers.getPortion(result);
-                                                                            int currentPortion = Global.currentOrder.portions.size() + 1;
-                                                                            Global.currentOrder.portions.add(new Portion(currentPortion));
+                                                                            Global.currentOrder.setNextPortion();
                                                                         }
                                                                         break;
                                                                 }
@@ -186,7 +189,7 @@ public class SplashActivity extends AppCompatActivity {
                                     break;
                             }
                         } catch (Exception e) {
-                            Utils.log(e.getMessage());
+                            Utils.log("clients.getOrders error :" + e.getMessage());
                         }
                     }
 

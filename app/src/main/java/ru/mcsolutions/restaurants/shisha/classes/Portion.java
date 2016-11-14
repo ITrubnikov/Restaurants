@@ -41,7 +41,7 @@ public class Portion {
     public void setPDate(String pDate) throws ParseException {
         this.pDate = Global.simpleDateTimeFormat.parse(pDate);
     }
-    public Date getDate() {
+    public Date getPDate() {
         return pDate;
     }
 }

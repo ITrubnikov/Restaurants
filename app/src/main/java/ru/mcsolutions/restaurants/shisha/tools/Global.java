@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import ru.mcsolutions.restaurants.shisha.classes.CurrentOrder;
 import ru.mcsolutions.restaurants.shisha.classes.Location;
 import ru.mcsolutions.restaurants.shisha.classes.MainMenu;
-import ru.mcsolutions.restaurants.shisha.classes.Parsers;
 
 public class Global {
 

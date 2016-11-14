@@ -32,6 +32,13 @@ public class OrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
+        textViewCaption = (AppCompatTextView) findViewById(R.id.textViewCaption);
+        textViewTotal = (AppCompatTextView) findViewById(R.id.textViewTotal);
+        textViewPTotal = (AppCompatTextView) findViewById(R.id.textViewPTotal);
+        buttonSend = (AppCompatButton) findViewById(R.id.buttonSend);
+
+        Global.currentOrder.removeEmptyDishes();
+
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -39,59 +46,89 @@ public class OrderActivity extends AppCompatActivity {
                 new OrderDishesRecyclerAdapter(context, Global.currentOrder.orderDishes, Global.currentOrder.portions, textViewTotal, textViewPTotal);
         recyclerView.setAdapter(dishTypesRecyclerAdapter);
 
-        textViewCaption = (AppCompatTextView) findViewById(R.id.textViewCaption);
-        textViewTotal = (AppCompatTextView) findViewById(R.id.textViewTotal);
-        textViewPTotal = (AppCompatTextView) findViewById(R.id.textViewPTotal);
-        buttonSend = (AppCompatButton) findViewById(R.id.buttonSend);
 
         textViewCaption.setText("Мой заказ");
 
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+/*
                 if(Global.clientName.equals("")){
 //посыл
                     final Internet internet = new Internet(context);
+
                     internet.addParamNameValue("name", " ");
                     internet.addParamNameValue("birthday", " ");
                     internet.startURL("clients.sendInfo", null);
                 }
-
+*/
                 final Internet internet = new Internet(context);
                 if(internet.isExists()){
-                    Handler handler = new Handler(){
-                        public void handleMessage(Message message) {
-                            try {
-                                switch (message.what) {
-                                    case Global.HTTP_PENDING:
-                                        break;
-                                    case Global.HTTP_FINISHED:
-                                        String result = internet.result;
-                                        if (result.startsWith("-1;")) {
-                                            Toast.makeText(context, result.substring(3), Toast.LENGTH_LONG).show();
-                                            finish();
-                                        } else {
-                                            if(result.startsWith("1;")){
-                                                Global.currentOrder.setIdOrder(result.substring(2));
-                                                Toast.makeText(context, "Заказ успешно послан", Toast.LENGTH_LONG).show();
-                                            }else{
-                                                Toast.makeText(context, Global.NOT_RECOGNIZED, Toast.LENGTH_LONG).show();
+                    if(Global.currentOrder.getIdOrder().equals("")){
+                        Handler handler = new Handler(){
+                            public void handleMessage(Message message) {
+                                try {
+                                    switch (message.what) {
+                                        case Global.HTTP_PENDING:
+                                            break;
+                                        case Global.HTTP_FINISHED:
+                                            String result = internet.result;
+                                            if (result.startsWith("-1;")) {
+                                                Toast.makeText(context, result.substring(3), Toast.LENGTH_LONG).show();
+                                                finish();
+                                            } else {
+                                                if(result.startsWith("1;")){
+                                                    Global.currentOrder.setIdOrder(result.substring(2));
+                                                    Toast.makeText(context, "Заказ успешно послан", Toast.LENGTH_LONG).show();
+                                                }else{
+                                                    Toast.makeText(context, Global.NOT_RECOGNIZED, Toast.LENGTH_LONG).show();
+                                                }
                                             }
-                                        }
-                                        break;
+                                            break;
+                                    }
+                                } catch (Exception e) {
+                                    Utils.log(e.getMessage());
                                 }
-                            } catch (Exception e) {
-                                Utils.log(e.getMessage());
                             }
-                        }
-                    };
-                    internet.addParamNameValue("idlocation", Global.location.getId());
-                    internet.addParamNameValue("string", Global.currentOrder.getString());
-                    internet.startURL("clients.sendOrder", handler);
+                        };
+                        internet.addParamNameValue("idlocation", Global.location.getId());
+                        internet.addParamNameValue("string", Global.currentOrder.getString());
+                        internet.startURL("clients.sendOrder", handler);
+                        Global.currentOrder.setPortionDateAmount();
+                        Global.currentOrder.setNextPortion();
+                    }else{
+                        Handler handler = new Handler(){
+                            public void handleMessage(Message message) {
+                                try {
+                                    switch (message.what) {
+                                        case Global.HTTP_PENDING:
+                                            break;
+                                        case Global.HTTP_FINISHED:
+                                            String result = internet.result;
+                                            if (result.startsWith("-1;")) {
+                                                Toast.makeText(context, result.substring(3), Toast.LENGTH_LONG).show();
+                                                finish();
+                                            } else {
+                                                if(result.startsWith("1;")){
+                                                    Toast.makeText(context, result.substring(2), Toast.LENGTH_LONG).show();
+                                                    Global.currentOrder.setPortionDateAmount();
+                                                    Global.currentOrder.setNextPortion();
+                                                }else{
+                                                    Toast.makeText(context, Global.NOT_RECOGNIZED, Toast.LENGTH_LONG).show();
+                                                }
+                                            }
+                                            break;
+                                    }
+                                } catch (Exception e) {
+                                    Utils.log(e.getMessage());
+                                }
+                            }
+                        };
+                        internet.addParamNameValue("idOrder", Global.currentOrder.getIdOrder());
+                        internet.addParamNameValue("string", Global.currentOrder.getString());
+                        internet.startURL("clients.addToOrder", handler);
+                    }
                 }
-                Global.currentOrder.setNextPortion();
-
             }
         });
     }
