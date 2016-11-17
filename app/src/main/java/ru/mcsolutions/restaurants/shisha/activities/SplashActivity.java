@@ -144,9 +144,7 @@ public class SplashActivity extends AppCompatActivity {
                                                 case "1":
                                                 case "2":
                                                 {
-                                                    Utils.log("idOrder = " + idOrder);
                                                     Global.currentOrder.setIdOrder(idOrder);
-                                                    Utils.log("idOrder = " + Global.currentOrder.getIdOrder());
                                                     final Internet internet = new Internet(context);
                                                     Handler handler = new Handler() {
                                                         public void handleMessage(Message message) {
@@ -169,7 +167,6 @@ public class SplashActivity extends AppCompatActivity {
                                                                 Utils.log(e.getMessage());
                                                             }
                                                         }
-
                                                     };
                                                     internet.addParamNameValue("idOrder", idOrder);
                                                     internet.startURL("clients.getOrderPortions", handler);

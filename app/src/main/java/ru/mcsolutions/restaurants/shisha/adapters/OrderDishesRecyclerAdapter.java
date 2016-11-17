@@ -55,23 +55,6 @@ public class OrderDishesRecyclerAdapter extends RecyclerView.Adapter<OrderDishes
         }
     }
 
-    class Card{
-
-        int portion;
-        OrderDish orderDish;
-
-        public Card(int portion){
-            this.portion = portion;
-            this.orderDish = null;
-        }
-        public Card(int portion, OrderDish orderDish){
-            this.portion = portion;
-            this.orderDish = orderDish;
-        }
-        public int getPortion(){return portion;}
-        public OrderDish getOrderDish(){return orderDish;}
-    }
-
     Context context;
     Resources resources;
 
@@ -95,16 +78,19 @@ public class OrderDishesRecyclerAdapter extends RecyclerView.Adapter<OrderDishes
         cards = new ArrayList<Card>();
         int s = portions.size();
         for(int i=0;i<s;i++){
-            int portion = s - i;
+            Portion portion = portions.get(s-i-1);
             cards.add(new Card(portion));
             for(int j=0;j<this.orderDishes.size();j++){
                 OrderDish orderDish = this.orderDishes.get(j);
-                if(orderDish.getPortion() == portion){
+                if(orderDish.getPortion() == portion.getPortion()){
                     cards.add(new Card(portion, orderDish));
                 }
             }
         }
         cards.remove(0);//последняя порция без заголовка
+        for(int i=0;i<cards.size();i++){
+            Utils.log(cards.get(i).toString());
+        }
     }
 
     @Override
@@ -117,9 +103,9 @@ public class OrderDishesRecyclerAdapter extends RecyclerView.Adapter<OrderDishes
     @Override
     public void onBindViewHolder(OrderDishesRecyclerAdapter.OrderDishesViewHolder viewHolder, final int position) {
         Card card = cards.get(position);
-        int p = card.getPortion();
-        Portion portion = portions.get(p-1);
-        if(card.getOrderDish()==null){
+        Portion portion = card.getPortion();
+        Utils.log("portion = " + portion.getPortion());
+        if(card.getOrderDish() == null){//показываем порцию
             viewHolder.cardViewPortion.setVisibility(View.VISIBLE);
             viewHolder.cardViewDish.setVisibility(View.GONE);
             viewHolder.textViewPortion.setText("# " + portion.getPortion());
@@ -127,13 +113,13 @@ public class OrderDishesRecyclerAdapter extends RecyclerView.Adapter<OrderDishes
                 viewHolder.textViewPDate.setText(Global.simpleDateTimeFormat.format(portion.getPDate()));
             }
             viewHolder.textViewAmount.setText(Global.decimalFormat.format(portion.getAmount()));
-        }else{
+        }else{//показываем блюдо
             OrderDish orderDish = card.getOrderDish();
             viewHolder.cardViewPortion.setVisibility(View.GONE);
             viewHolder.cardViewDish.setVisibility(View.VISIBLE);
             Dish dish = Global.currentOrder.getDish(orderDish.getIdDish());
             viewHolder.textViewDish.setText(dish.getName());
-            viewHolder.textViewPrice.setText(Global.decimalFormat.format(dish.getPrice()));
+            viewHolder.textViewPrice.setText("Цена " + Global.decimalFormat.format(dish.getPrice()));
             viewHolder.textViewWeight.setText(dish.getWeight()+"");
             viewHolder.textViewDish.setText(dish.getName());
             String imageName = dish.getImageName();

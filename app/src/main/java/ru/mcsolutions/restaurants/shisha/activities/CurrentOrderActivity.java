@@ -18,7 +18,7 @@ import ru.mcsolutions.restaurants.shisha.tools.Global;
 import ru.mcsolutions.restaurants.shisha.tools.Internet;
 import ru.mcsolutions.restaurants.shisha.tools.Utils;
 
-public class OrderActivity extends AppCompatActivity {
+public class CurrentOrderActivity extends AppCompatActivity {
 
     Context context = this;
     AppCompatTextView textViewCaption;
