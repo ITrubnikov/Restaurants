@@ -159,6 +159,7 @@ public class SplashActivity extends AppCompatActivity {
                                                                             finish();
                                                                         } else {
                                                                             Global.currentOrder.portions = Global.parsers.getPortion(result);
+                                                                            Global.currentOrder.setMaxPortion();
                                                                             Global.currentOrder.setNextPortion();
                                                                         }
                                                                         break;

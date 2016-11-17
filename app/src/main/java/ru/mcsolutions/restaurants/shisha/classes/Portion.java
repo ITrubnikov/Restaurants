@@ -44,4 +44,8 @@ public class Portion {
     public Date getPDate() {
         return pDate;
     }
+
+    public String toString(){
+        return getPortion() + ", " + getPDate() + ", " + getAmount();
+    }
 }

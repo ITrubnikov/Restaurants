@@ -12,8 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ru.mcsolutions.restaurants.shisha.R;
+import ru.mcsolutions.restaurants.shisha.classes.Card;
 import ru.mcsolutions.restaurants.shisha.classes.Dish;
 import ru.mcsolutions.restaurants.shisha.classes.OrderDish;
 import ru.mcsolutions.restaurants.shisha.classes.Portion;
@@ -62,7 +64,7 @@ public class OrderDishesRecyclerAdapter extends RecyclerView.Adapter<OrderDishes
     ArrayList<Portion> portions;
     AppCompatTextView textViewTotal;
     AppCompatTextView textViewPTotal;
-    ArrayList<Card> cards;
+    ArrayList<Card> cards = new ArrayList<Card>();
 
     public OrderDishesRecyclerAdapter(Context context
             , ArrayList<OrderDish> orderDishes
@@ -76,9 +78,8 @@ public class OrderDishesRecyclerAdapter extends RecyclerView.Adapter<OrderDishes
         this.textViewTotal = textViewTotal;
         this.textViewPTotal = textViewPTotal;
         cards = new ArrayList<Card>();
-        int s = portions.size();
-        for(int i=0;i<s;i++){
-            Portion portion = portions.get(s-i-1);
+        for(int i=portions.size()-1;i>=0;i--){
+            Portion portion = portions.get(i);
             cards.add(new Card(portion));
             for(int j=0;j<this.orderDishes.size();j++){
                 OrderDish orderDish = this.orderDishes.get(j);
@@ -87,10 +88,7 @@ public class OrderDishesRecyclerAdapter extends RecyclerView.Adapter<OrderDishes
                 }
             }
         }
-        cards.remove(0);//последняя порция без заголовка
-        for(int i=0;i<cards.size();i++){
-            Utils.log(cards.get(i).toString());
-        }
+        this.cards.remove(0);//последняя порция без заголовка
     }
 
     @Override
@@ -104,7 +102,6 @@ public class OrderDishesRecyclerAdapter extends RecyclerView.Adapter<OrderDishes
     public void onBindViewHolder(OrderDishesRecyclerAdapter.OrderDishesViewHolder viewHolder, final int position) {
         Card card = cards.get(position);
         Portion portion = card.getPortion();
-        Utils.log("portion = " + portion.getPortion());
         if(card.getOrderDish() == null){//показываем порцию
             viewHolder.cardViewPortion.setVisibility(View.VISIBLE);
             viewHolder.cardViewDish.setVisibility(View.GONE);
@@ -120,6 +117,7 @@ public class OrderDishesRecyclerAdapter extends RecyclerView.Adapter<OrderDishes
             Dish dish = Global.currentOrder.getDish(orderDish.getIdDish());
             viewHolder.textViewDish.setText(dish.getName());
             viewHolder.textViewPrice.setText("Цена " + Global.decimalFormat.format(dish.getPrice()));
+            viewHolder.textViewWeight.setVisibility(View.GONE);
             viewHolder.textViewWeight.setText(dish.getWeight()+"");
             viewHolder.textViewDish.setText(dish.getName());
             String imageName = dish.getImageName();
@@ -135,6 +133,9 @@ public class OrderDishesRecyclerAdapter extends RecyclerView.Adapter<OrderDishes
             AppCompatButton buttonPlus = viewHolder.buttonPlus;
             final AppCompatTextView textViewCount = viewHolder.textViewCount;
             viewHolder.textViewCount.setText(orderDish.getCount() + "");
+
+        Utils.log("getPortion() = " + orderDish.getPortion());
+            Utils.log("getCurrentPortion() = " + Global.currentOrder.getCurrentPortion());
 
             if(orderDish.getPortion() == Global.currentOrder.getCurrentPortion()){
                 buttonMinus.setVisibility(View.VISIBLE);

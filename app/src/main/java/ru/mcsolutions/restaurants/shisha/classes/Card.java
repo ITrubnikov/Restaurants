@@ -1,9 +1,9 @@
-package ru.mcsolutions.restaurants.shisha.adapters;
+package ru.mcsolutions.restaurants.shisha.classes;
 
 import ru.mcsolutions.restaurants.shisha.classes.OrderDish;
 import ru.mcsolutions.restaurants.shisha.classes.Portion;
 
-class Card{
+public class Card{
 
     Portion portion;
     OrderDish orderDish;
@@ -24,7 +24,7 @@ class Card{
         if(orderDish == null){
             result = "portion = " + portion.toString();
         }else{
-            result = "portion = " + portion.toString() + ", idDish = " + orderDish.getIdDish();
+            result = "portion = " + portion.getPortion() + ", idDish = " + orderDish.getIdDish();
         }
         return result;
     }

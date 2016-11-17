@@ -40,6 +40,9 @@ public class CurrentOrder {
     }
 
 //    public void setCurrentPortion(int currentPortion){this.currentPortion = currentPortion; }
+    public void setMaxPortion(){
+        currentPortion = portions.size();
+    }
     public int getCurrentPortion(){ return currentPortion; }
     public void setNextPortion(){
         portions.add(new Portion());
