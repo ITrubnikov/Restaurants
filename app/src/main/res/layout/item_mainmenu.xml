@@ -9,7 +9,7 @@
     android:focusable="false"
     android:focusableInTouchMode="true"
     android:foreground="?android:attr/selectableItemBackground"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:stateListAnimator="@animator/lift_on_touch"
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true"
@@ -17,9 +17,18 @@
     card_view:cardElevation="10dp"
     card_view:cardUseCompatPadding="true"
     android:id="@+id/cardViewMainMenu"
+    card_view:contentPadding="0dp"
 
 
-    card_view:contentPadding="0dp">
+
+
+    card_view:cardCornerRadius="6dp"
+
+
+   >
+
+
+    >
 
     <RelativeLayout
         android:id="@+id/layoutPortion"
@@ -39,14 +48,15 @@
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textViewImageName"
             android:layout_width="0dp"
-
             android:layout_height="0dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="62dp"
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
-            android:text="ImageName" />
+            android:text="ImageName"
+            android:visibility="gone"
+            />
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/imageView"
