@@ -32,6 +32,7 @@
         <activity
             android:name=".activities.MainMenuActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/MaterialAnimations"
             />
         <activity
             android:name=".activities.DishTypesActivity"

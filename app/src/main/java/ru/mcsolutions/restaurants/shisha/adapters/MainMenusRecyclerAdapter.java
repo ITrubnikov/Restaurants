@@ -3,12 +3,14 @@ package ru.mcsolutions.restaurants.shisha.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -55,16 +57,26 @@ public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecy
     @Override
     public void onBindViewHolder(final MainMenusViewHolder viewHolder, final int position) {
 
+
+        Typeface myTaypeface=Typeface.createFromAsset(context.getAssets(),"NeuchaRegular.ttf");//подключение стиля
         AppCompatTextView textViewId = viewHolder.textViewId;
-        textViewId.setText(mainMenus.get(position).getId());
         AppCompatTextView textViewName = viewHolder.textViewName;
 
+
+        textViewId.setText(mainMenus.get(position).getId());
+
+
         final String name = mainMenus.get(position).getName();
+        textViewName.setTypeface(myTaypeface);
         textViewName.setText(name);
+
+
 
         AppCompatTextView textViewImageName = viewHolder.textViewImageName;
         String imageName = mainMenus.get(position).getImageName();
         textViewImageName.setText(imageName);
+
+
 
         AppCompatImageView imageView = viewHolder.imageView;
         int resourceId = resources.getIdentifier(imageName, "drawable", context.getPackageName());

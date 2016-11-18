@@ -1,6 +1,7 @@
 package ru.mcsolutions.restaurants.shisha.activities;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,7 +28,15 @@ public class MainMenuActivity extends AppCompatActivity {
         MainMenusRecyclerAdapter mainMenusRecyclerAdapter = new MainMenusRecyclerAdapter(context, Global.mainMenus);
         recyclerView.setAdapter(mainMenusRecyclerAdapter);
 
+        /*textViewLocation = (TextView) findViewById(R.id.textViewLocation);
+        textViewLocation.setText(Global.location.getName());*/
+
+
+        Typeface myTaypeface=Typeface.createFromAsset(getAssets(),"NeuchaRegular.ttf");
         textViewLocation = (TextView) findViewById(R.id.textViewLocation);
+        textViewLocation.setTypeface(myTaypeface);
         textViewLocation.setText(Global.location.getName());
+
+
     }
 }

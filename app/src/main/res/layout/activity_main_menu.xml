@@ -4,7 +4,8 @@
     android:id="@+id/activity_main_menu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ru.mcsolutions.restaurants.shisha.activities.MainMenuActivity">
+    tools:context="ru.mcsolutions.restaurants.shisha.activities.MainMenuActivity"
+    android:background="@drawable/fon_bel_t">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -30,5 +31,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
         android:layout_alignParentStart="true" />
+
+
 
 </RelativeLayout>
