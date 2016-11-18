@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
 import java.util.ArrayList;
 
 import ru.mcsolutions.restaurants.shisha.R;
@@ -60,7 +63,7 @@ public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecy
     @Override
     public void onBindViewHolder(final MainMenusViewHolder viewHolder, final int position) {
 
-        YoYo.with(Techniques.BounceInUp).playOn(viewHolder.cardView);
+        YoYo.with(Techniques.BounceInRight).playOn(viewHolder.cardView);
 
 
         Typeface myTaypeface=Typeface.createFromAsset(context.getAssets(),"NeuchaRegular.ttf");//подключение стиля
