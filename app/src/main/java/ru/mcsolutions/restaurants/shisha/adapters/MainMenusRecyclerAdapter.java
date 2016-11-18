@@ -39,7 +39,7 @@ public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecy
             this.textViewName = (AppCompatTextView) itemView.findViewById(R.id.textViewName);
             this.textViewImageName = (AppCompatTextView) itemView.findViewById(R.id.textViewImageName);
             this.imageView = (AppCompatImageView) itemView.findViewById(R.id.imageView);
-            this.cardView=(CardView) itemView.findViewById(R.id.cardViewMainMenu);
+            cardView=(CardView) itemView.findViewById(R.id.cardViewMainMenu);
         }
     }
 
@@ -68,23 +68,16 @@ public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecy
 
         Typeface myTaypeface=Typeface.createFromAsset(context.getAssets(),"NeuchaRegular.ttf");//подключение стиля
         AppCompatTextView textViewId = viewHolder.textViewId;
-        AppCompatTextView textViewName = viewHolder.textViewName;
-
-
         textViewId.setText(mainMenus.get(position).getId());
-
+        AppCompatTextView textViewName = viewHolder.textViewName;
 
         final String name = mainMenus.get(position).getName();
         textViewName.setTypeface(myTaypeface);
         textViewName.setText(name);
 
-
-
         AppCompatTextView textViewImageName = viewHolder.textViewImageName;
         String imageName = mainMenus.get(position).getImageName();
         textViewImageName.setText(imageName);
-
-
 
         AppCompatImageView imageView = viewHolder.imageView;
         int resourceId = resources.getIdentifier(imageName, "drawable", context.getPackageName());
