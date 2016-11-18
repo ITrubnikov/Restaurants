@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecy
         AppCompatTextView textViewName;
         AppCompatTextView textViewImageName;
         AppCompatImageView imageView;
+        CardView cardView;
 
         public MainMenusViewHolder(View itemView) {
             super(itemView);
