@@ -16,6 +16,7 @@
     card_view:cardBackgroundColor="#ef332502"
     card_view:cardElevation="10dp"
     card_view:cardUseCompatPadding="true"
+    android:id="@+id/cardViewMainMenu"
 
 
     card_view:contentPadding="0dp">
