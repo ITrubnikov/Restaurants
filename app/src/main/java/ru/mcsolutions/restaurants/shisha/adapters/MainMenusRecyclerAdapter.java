@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import ru.mcsolutions.restaurants.shisha.R;
 import ru.mcsolutions.restaurants.shisha.activities.DishTypesActivity;
+import ru.mcsolutions.restaurants.shisha.activities.SliderAnimation;
 import ru.mcsolutions.restaurants.shisha.classes.MainMenu;
 
 public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecyclerAdapter.MainMenusViewHolder> {
@@ -81,7 +82,7 @@ public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecy
 //                    case "Афиша":
 //                      break;
                     case "Меню":
-                        Intent intent = new Intent(context, DishTypesActivity.class);
+                        Intent intent = new Intent(context, SliderAnimation.class);
                         context.startActivity(intent);
                         break;
                     case "Мои заказы":

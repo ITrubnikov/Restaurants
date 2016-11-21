@@ -52,6 +52,8 @@
 
         <activity android:name=".activities.PermissionsActiviry">
         </activity>
+        <activity android:name=".activities.SliderAnimation">
+        </activity>
     </application>
 
 </manifest>
