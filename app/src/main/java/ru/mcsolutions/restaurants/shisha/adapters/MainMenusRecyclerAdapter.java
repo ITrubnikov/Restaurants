@@ -3,13 +3,19 @@ package ru.mcsolutions.restaurants.shisha.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 
 import java.util.ArrayList;
 
@@ -25,6 +31,7 @@ public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecy
         AppCompatTextView textViewName;
         AppCompatTextView textViewImageName;
         AppCompatImageView imageView;
+        CardView cardView;
 
         public MainMenusViewHolder(View itemView) {
             super(itemView);
@@ -32,6 +39,7 @@ public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecy
             this.textViewName = (AppCompatTextView) itemView.findViewById(R.id.textViewName);
             this.textViewImageName = (AppCompatTextView) itemView.findViewById(R.id.textViewImageName);
             this.imageView = (AppCompatImageView) itemView.findViewById(R.id.imageView);
+            cardView=(CardView) itemView.findViewById(R.id.cardViewMainMenum);
         }
     }
 
@@ -55,11 +63,16 @@ public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecy
     @Override
     public void onBindViewHolder(final MainMenusViewHolder viewHolder, final int position) {
 
+        YoYo.with(Techniques.FadeIn).duration(1500).playOn(viewHolder.cardView);
+
+
+        Typeface myTaypeface=Typeface.createFromAsset(context.getAssets(),"NeuchaRegular.ttf");//подключение стиля
         AppCompatTextView textViewId = viewHolder.textViewId;
         textViewId.setText(mainMenus.get(position).getId());
         AppCompatTextView textViewName = viewHolder.textViewName;
 
         final String name = mainMenus.get(position).getName();
+        textViewName.setTypeface(myTaypeface);
         textViewName.setText(name);
 
         AppCompatTextView textViewImageName = viewHolder.textViewImageName;

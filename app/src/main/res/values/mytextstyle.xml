@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    Typeface font = Typeface.createFromAsset(getAssets(), “NeuchaRegular.ttf”);
+    TextView tv=(TextView) findViewById(R.id.textView0);
+    tv.setTypeface(font);
+</resources>
