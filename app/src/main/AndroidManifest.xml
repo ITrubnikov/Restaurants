@@ -32,23 +32,16 @@
         <activity
             android:name=".activities.MainMenuActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MaterialAnimations"
-            />
+            android:theme="@style/MaterialAnimations" />
         <activity
             android:name=".activities.DishTypesActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.DishesActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.CurrentOrderActivity"
-            android:screenOrientation="portrait"
-            />
-
-
-
+            android:screenOrientation="portrait" />
 
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
@@ -58,7 +51,11 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".activities.PermissionsActiviry">
+        <activity android:name=".activities.PermissionsActiviry"></activity>
+        <activity
+            android:name=".activities.AfishaActivity"
+            android:theme="@style/MaterialAnimations">
+
         </activity>
     </application>
 

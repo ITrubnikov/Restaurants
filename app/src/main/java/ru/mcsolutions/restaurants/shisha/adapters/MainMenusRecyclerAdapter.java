@@ -20,6 +20,7 @@ import com.daimajia.androidanimations.library.YoYo;
 import java.util.ArrayList;
 
 import ru.mcsolutions.restaurants.shisha.R;
+import ru.mcsolutions.restaurants.shisha.activities.AfishaActivity;
 import ru.mcsolutions.restaurants.shisha.activities.DishTypesActivity;
 import ru.mcsolutions.restaurants.shisha.classes.MainMenu;
 
@@ -96,6 +97,10 @@ public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecy
                     case "Меню":
                         Intent intent = new Intent(context, DishTypesActivity.class);
                         context.startActivity(intent);
+                        break;
+                    case "Афиша":
+                        Intent intent2 = new Intent(context, AfishaActivity.class);
+                        context.startActivity(intent2);
                         break;
                     case "Мои заказы":
                         break;
