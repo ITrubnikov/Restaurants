@@ -39,7 +39,7 @@ public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecy
             this.textViewName = (AppCompatTextView) itemView.findViewById(R.id.textViewName);
             this.textViewImageName = (AppCompatTextView) itemView.findViewById(R.id.textViewImageName);
             this.imageView = (AppCompatImageView) itemView.findViewById(R.id.imageView);
-            cardView=(CardView) itemView.findViewById(R.id.cardViewMainMenu);
+            cardView=(CardView) itemView.findViewById(R.id.cardViewMainMenum);
         }
     }
 
@@ -63,7 +63,7 @@ public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecy
     @Override
     public void onBindViewHolder(final MainMenusViewHolder viewHolder, final int position) {
 
-        YoYo.with(Techniques.BounceInRight).playOn(viewHolder.cardView);
+        YoYo.with(Techniques.FadeIn).duration(1500).playOn(viewHolder.cardView);
 
 
         Typeface myTaypeface=Typeface.createFromAsset(context.getAssets(),"NeuchaRegular.ttf");//подключение стиля
