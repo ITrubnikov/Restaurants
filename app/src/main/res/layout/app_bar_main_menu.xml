@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="ru.mcsolutions.restaurants.shisha.activities.MainMenuActivity"
+    android:theme="@style/MaterialAnimations"
+
+    >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:elevation="@dimen/elevation_header"
+        android:background="@color/colorPrimary"
+
+
+
+        >
+
+        <TextView
+            android:text="Location"
+            android:id="@+id/textViewLocation"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textColor="@color/cardview_light_background"
+            />
+
+    </android.support.v7.widget.Toolbar>
+
+    <include layout="@layout/content_main_menu" />
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:elevation="15dp"
+        android:id="@+id/menu_blue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        fab:menu_colorNormal="#1565C0"
+        fab:menu_colorPressed="#2272CD"
+        fab:menu_colorRipple="#62B2FF"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+
+        fab:menu_showShadow="true"
+        fab:menu_labels_showShadow="true"
+
+        android:layout_gravity="top|right"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+
+        android:fadeScrollbars="true"
+        android:layout_marginBottom="10dp">
+
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/fab1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_star"
+        style="@style/MenuButtonsSmall"
+        fab:fab_label="Вызвать оффицианта"/>
+
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/fab2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_star"
+        style="@style/MenuButtonsSmall"
+        fab:fab_label="Вызвать кальянщика"/>
+
+    </com.github.clans.fab.FloatingActionMenu>
+
+</android.support.design.widget.CoordinatorLayout>
