@@ -22,7 +22,9 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.SplashActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,6 +35,7 @@
             android:name=".activities.MainMenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MaterialAnimations"
+            android:label=" "
             />
         <activity
             android:name=".activities.DishTypesActivity"
