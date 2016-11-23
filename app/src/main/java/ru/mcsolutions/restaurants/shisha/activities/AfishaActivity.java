@@ -18,17 +18,17 @@ public class AfishaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_afisha);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
 
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 3"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 4"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 5"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 6"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 7"));
+        tabLayout.addTab(tabLayout.newTab().setText("Понедельник"));
+        tabLayout.addTab(tabLayout.newTab().setText("Вторник"));
+        tabLayout.addTab(tabLayout.newTab().setText("Среда"));
+        tabLayout.addTab(tabLayout.newTab().setText("Четверг"));
+        tabLayout.addTab(tabLayout.newTab().setText("Пятница"));
+        tabLayout.addTab(tabLayout.newTab().setText("Суббота"));
+        tabLayout.addTab(tabLayout.newTab().setText("Воскресенье"));
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
