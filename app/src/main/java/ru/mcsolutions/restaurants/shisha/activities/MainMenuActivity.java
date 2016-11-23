@@ -24,11 +24,14 @@ import com.github.clans.fab.FloatingActionMenu;
 import ru.mcsolutions.restaurants.shisha.R;
 import ru.mcsolutions.restaurants.shisha.adapters.MainMenusRecyclerAdapter;
 import ru.mcsolutions.restaurants.shisha.tools.Global;
+import ru.mcsolutions.restaurants.shisha.tools.UtilsNew;
 
 public class MainMenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Context context = this;
     TextView textViewLocation;
+    public static final String PREF_USER_FIRST_TIME = "user_first_time";
+    boolean isUserFirstTime;
 
     private FloatingActionMenu menuBlue;
     private com.github.clans.fab.FloatingActionButton fab1;
@@ -38,6 +41,15 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        isUserFirstTime = Boolean.valueOf(UtilsNew.readSharedSetting(MainMenuActivity.this, PREF_USER_FIRST_TIME, "true"));
+
+        Intent introIntent = new Intent(MainMenuActivity.this, PagerActivity.class);
+        introIntent.putExtra(PREF_USER_FIRST_TIME, isUserFirstTime);
+
+        if (isUserFirstTime)
+            startActivity(introIntent);
+
         setContentView(R.layout.activity_main_menu);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);

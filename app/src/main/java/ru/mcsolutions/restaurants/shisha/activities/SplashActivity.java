@@ -54,7 +54,7 @@ public class SplashActivity extends AppCompatActivity {
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(context, MainMenuActivity.class);
+                    Intent intent = new Intent(context, PagerActivity.class);
                     startActivity(intent);
                 }
             };
