@@ -60,6 +60,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/MaterialAnimations"
             />
+        <activity
+            android:name=".activities.ChangeLocationActivity"
+            android:screenOrientation="portrait" />
+
 
 
         <!--

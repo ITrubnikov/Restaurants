@@ -129,7 +129,7 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
+        // Handle action bar change_location_activity_item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
@@ -145,13 +145,15 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        // Handle navigation view change_location_activity_item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
             Intent intent = new Intent(context, DishTypesActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_gallery) {
+            Intent intent2 = new Intent(context, ChangeLocationActivity.class);
+            startActivity(intent2);
 
         } else if (id == R.id.nav_slideshow) {
 
