@@ -24,11 +24,14 @@ import com.github.clans.fab.FloatingActionMenu;
 import ru.mcsolutions.restaurants.shisha.R;
 import ru.mcsolutions.restaurants.shisha.adapters.MainMenusRecyclerAdapter;
 import ru.mcsolutions.restaurants.shisha.tools.Global;
+import ru.mcsolutions.restaurants.shisha.tools.UtilsNew;
 
 public class MainMenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Context context = this;
     TextView textViewLocation;
+    public static final String PREF_USER_FIRST_TIME = "user_first_time";
+    boolean isUserFirstTime;
 
     private FloatingActionMenu menuBlue;
     private com.github.clans.fab.FloatingActionButton fab1;
@@ -38,6 +41,15 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        isUserFirstTime = Boolean.valueOf(UtilsNew.readSharedSetting(MainMenuActivity.this, PREF_USER_FIRST_TIME, "true"));
+
+        Intent introIntent = new Intent(MainMenuActivity.this, PagerActivity.class);
+        introIntent.putExtra(PREF_USER_FIRST_TIME, isUserFirstTime);
+
+        if (isUserFirstTime)
+            startActivity(introIntent);
+
         setContentView(R.layout.activity_main_menu);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -117,7 +129,7 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
+        // Handle action bar change_location_activity_item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
@@ -133,13 +145,15 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        // Handle navigation view change_location_activity_item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
             Intent intent = new Intent(context, DishTypesActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_gallery) {
+            Intent intent2 = new Intent(context, ChangeLocationActivity.class);
+            startActivity(intent2);
 
         } else if (id == R.id.nav_slideshow) {
 
