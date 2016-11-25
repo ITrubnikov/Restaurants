@@ -1,6 +1,7 @@
 package ru.mcsolutions.restaurants.shisha.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -10,6 +11,8 @@ import android.widget.Toast;
 
 import com.gigamole.infinitecycleviewpager.VerticalInfiniteCycleViewPager;
 import ru.mcsolutions.restaurants.shisha.R;
+import ru.mcsolutions.restaurants.shisha.activities.AfishaActivity;
+import ru.mcsolutions.restaurants.shisha.activities.DishTypesActivity;
 import ru.mcsolutions.restaurants.shisha.tools.UtilsScrolling;
 
 import static ru.mcsolutions.restaurants.shisha.tools.UtilsScrolling.setupItem;
@@ -77,7 +80,22 @@ public class HorizontalPagerAdapter extends PagerAdapter {
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext,"Выбран клуб "+ position,Toast.LENGTH_SHORT).show();
+                    switch(position){
+                        case 1:
+                            Intent intent = new Intent(mContext, DishTypesActivity.class);
+                            mContext.startActivity(intent);
+                            break;
+                        case 2:
+                            Intent intent1 = new Intent(mContext, AfishaActivity.class);
+                            mContext.startActivity(intent1);
+                            break;
+                        case 3:
+                            break;
+                        default:
+                            Toast.makeText(mContext,"Выбран клуб "+ position,Toast.LENGTH_SHORT).show();
+                    }
+
+
                 }
             });
 
