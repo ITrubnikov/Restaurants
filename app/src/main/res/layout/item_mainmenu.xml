@@ -52,6 +52,7 @@
             android:visibility="gone" />
 
         <android.support.v7.widget.AppCompatImageView
+            android:transitionName="@string/transition_name_image"
             android:id="@+id/imageView"
             android:layout_width="52dp"
             android:layout_height="52dp"
@@ -63,6 +64,7 @@
             android:stateListAnimator="@animator/lift_on_touch" />
 
         <android.support.v7.widget.AppCompatTextView
+            android:transitionName="@string/transition_name_text"
             android:id="@+id/textViewName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

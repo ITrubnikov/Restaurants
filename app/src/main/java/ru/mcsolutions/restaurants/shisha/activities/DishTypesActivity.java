@@ -16,6 +16,8 @@ import ru.mcsolutions.restaurants.shisha.tools.Global;
 
 public class DishTypesActivity extends AppCompatActivity {
 
+    public final static String ID = "ID";
+
     Context context = this;
     AppCompatTextView textViewCaption;
     AppCompatTextView textViewTotal;

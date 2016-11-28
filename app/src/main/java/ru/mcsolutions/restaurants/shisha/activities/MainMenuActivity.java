@@ -6,6 +6,9 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,6 +26,8 @@ import com.github.clans.fab.FloatingActionMenu;
 
 import ru.mcsolutions.restaurants.shisha.R;
 import ru.mcsolutions.restaurants.shisha.adapters.MainMenusRecyclerAdapter;
+import ru.mcsolutions.restaurants.shisha.adapters.RecyclerClickListener;
+import ru.mcsolutions.restaurants.shisha.classes.MainMenu;
 import ru.mcsolutions.restaurants.shisha.tools.Global;
 import ru.mcsolutions.restaurants.shisha.tools.UtilsNew;
 
@@ -55,7 +60,7 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        MainMenusRecyclerAdapter mainMenusRecyclerAdapter = new MainMenusRecyclerAdapter(context, Global.mainMenus);
+        final MainMenusRecyclerAdapter mainMenusRecyclerAdapter = new MainMenusRecyclerAdapter(context, Global.mainMenus);
         recyclerView.setAdapter(mainMenusRecyclerAdapter);
 
         /*textViewLocation = (TextView) findViewById(R.id.textViewLocation);
@@ -90,6 +95,30 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        recyclerView.addOnItemTouchListener( // and the click is handled
+                new RecyclerClickListener(this, new RecyclerClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        Intent intent = new Intent(context, DishTypesActivity.class);
+                        intent.putExtra(DishTypesActivity.ID, mainMenusRecyclerAdapter.getItemCount());
+
+                        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                // the context of the activity
+                                MainMenuActivity.this,
+
+                                // For each shared element, add to this method a new Pair item,
+                                // which contains the reference of the view we are transitioning *from*,
+                                // and the value of the transitionName attribute
+                                new Pair<View, String>(view.findViewById(R.id.imageView),
+                                        getString(R.string.transition_name_image)),
+                                new Pair<View, String>(view.findViewById(R.id.textViewName),
+                                        getString(R.string.transition_name_text))
+
+                        );
+                        ActivityCompat.startActivity(MainMenuActivity.this, intent, options.toBundle());
+                    }
+                }));
 
 
 
