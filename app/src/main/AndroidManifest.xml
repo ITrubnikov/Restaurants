@@ -45,7 +45,8 @@
 
         <activity
             android:name=".activities.DishesActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialAnimations"/>
 
         <activity
             android:name=".activities.CurrentOrderActivity"
@@ -63,6 +64,10 @@
         <activity
             android:name=".activities.ChangeLocationActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.DishesDetalActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialAnimations"/>
 
 
 

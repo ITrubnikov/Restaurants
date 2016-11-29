@@ -1,7 +1,15 @@
 package ru.mcsolutions.restaurants.shisha.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
+
+import android.os.Parcelable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+
+import android.support.v4.util.Pair;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
@@ -13,9 +21,15 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import ru.mcsolutions.restaurants.shisha.R;
+
+import ru.mcsolutions.restaurants.shisha.activities.DishesDetalActivity;
 import ru.mcsolutions.restaurants.shisha.classes.Dish;
 import ru.mcsolutions.restaurants.shisha.tools.Global;
 import ru.mcsolutions.restaurants.shisha.tools.Utils;
+
+
+import static android.support.v4.app.ActivityOptionsCompat.makeSceneTransitionAnimation;
+
 
 public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAdapter.DishesViewHolder> {
 
@@ -85,7 +99,8 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
     }
 
     @Override
-    public void onBindViewHolder(DishesViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(final DishesViewHolder viewHolder, final int position) {
+        final Dish dish = dishes.get(viewHolder.getAdapterPosition());
         AppCompatTextView textViewName = viewHolder.textViewName;
         String name = dishes.get(position).getName();
         textViewName.setText(name);
@@ -123,6 +138,34 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
         final AppCompatTextView textViewCount = viewHolder.textViewCount;
         textViewCount.setText("0");
 
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DishesDetalActivity.class);
+
+
+
+
+                ActivityOptionsCompat options = makeSceneTransitionAnimation(
+                        // the context of the activity
+                        context.startActivity();,
+                        // For each shared element, add to this method a new Pair item,
+                        // which contains the reference of the view we are transitioning *from*,
+                        // and the value of the transitionName attribute
+                        new Pair<View, String>( v.findViewById(R.id.imageView),
+                                context.getString(R.string.transition_image)),
+                        new Pair<View, String>(v.findViewById(R.id.textViewName),
+                                context.getString(R.string.transition_text))
+
+                );
+                ActivityCompat.startActivity(DishesDetalActivity.class, intent, options.toBundle());
+
+            }
+        });
+
+
+
         buttonMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -156,6 +199,10 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
             }
         });
     }
+
+
+
+
 
     @Override
     public int getItemCount() {
