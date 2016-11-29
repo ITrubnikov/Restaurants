@@ -36,7 +36,7 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
 
     public class DishesViewHolder extends RecyclerView.ViewHolder{
 
-        /*AppCompatTextView textViewID;*/
+        AppCompatTextView textViewID;
 
         AppCompatTextView textViewName;
         AppCompatTextView textViewImageName;
@@ -66,7 +66,7 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
             this.buttonMinus = (AppCompatButton) itemView.findViewById(R.id.buttonMinus);
             this.buttonPlus = (AppCompatButton) itemView.findViewById(R.id.buttonPlus);
             this.textViewCount = (AppCompatTextView) itemView.findViewById(R.id.textViewCount);
-           /* this.textViewID=(AppCompatTextView)itemView.findViewById(R.id.textViewId);*/
+           this.textViewID=(AppCompatTextView)itemView.findViewById(R.id.textViewId);
 
 
         }
@@ -112,8 +112,8 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
     @Override
     public void onBindViewHolder(DishesViewHolder viewHolder, final int position) {
 
-        /*AppCompatTextView textViewId=viewHolder.textViewID;
-        final String idDish = dishes.get(position).getIdDish();*/
+        AppCompatTextView textViewId=viewHolder.textViewID;
+        final String idDish = dishes.get(position).getIdDish();
 
 
         AppCompatTextView textViewName = viewHolder.textViewName;
@@ -161,7 +161,8 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
             public void onClick(View v) {
 
                 Intent intent = new Intent(context, DishesDetalActivity.class);
-                intent.putExtra("idDish", name);
+                intent.putExtra("idDish", idDish);
+                intent.putExtra("resourceId",resourceId);
 
 // Pass data object in the bundle and populate details activity.
                 /*intent.putExtra("idDish", name);

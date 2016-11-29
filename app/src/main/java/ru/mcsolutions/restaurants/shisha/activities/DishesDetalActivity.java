@@ -1,6 +1,7 @@
 package ru.mcsolutions.restaurants.shisha.activities;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +18,10 @@ import ru.mcsolutions.restaurants.shisha.tools.Global;
 
 public class DishesDetalActivity extends AppCompatActivity {
     String idDish;
+    int resourceId;
     TextView mTextView;
+    ImageView mImageView;
+    private Resources resources;
 
 
     @Override
@@ -26,6 +30,9 @@ public class DishesDetalActivity extends AppCompatActivity {
         setContentView(R.layout.dishes_detal_activity);
 
         mTextView = (TextView) findViewById(R.id.textView2);
+        mImageView=(ImageView) findViewById(R.id.imageView3);
+
+
 
 
 
@@ -34,12 +41,20 @@ public class DishesDetalActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
          idDish = intent.getStringExtra("idDish");
+        resourceId=intent.getIntExtra("resourceId");
 
 
 
 
 
         mTextView.setText( idDish );
+
+
+        if(resourceId == 0){
+            mImageView.setImageDrawable(resources.getDrawable(R.drawable.food));
+        }else{
+            mImageView.setImageDrawable(resources.getDrawable(resourceId));
+        }
 
 
     }
