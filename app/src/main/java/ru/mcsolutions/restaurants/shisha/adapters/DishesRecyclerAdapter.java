@@ -4,12 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-
-import android.os.Parcelable;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
-
 import android.support.v4.util.Pair;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
@@ -17,23 +16,27 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
 import ru.mcsolutions.restaurants.shisha.R;
 
+import ru.mcsolutions.restaurants.shisha.activities.DishesActivity;
 import ru.mcsolutions.restaurants.shisha.activities.DishesDetalActivity;
 import ru.mcsolutions.restaurants.shisha.classes.Dish;
+
 import ru.mcsolutions.restaurants.shisha.tools.Global;
 import ru.mcsolutions.restaurants.shisha.tools.Utils;
 
-
-import static android.support.v4.app.ActivityOptionsCompat.makeSceneTransitionAnimation;
-
+import static com.stanko.tools.ResHelper.getString;
+import static ru.mcsolutions.restaurants.shisha.adapters.DishesRecyclerAdapter.DishesViewHolder.DURATION;
 
 public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAdapter.DishesViewHolder> {
 
     public class DishesViewHolder extends RecyclerView.ViewHolder{
+
+        /*AppCompatTextView textViewID;*/
 
         AppCompatTextView textViewName;
         AppCompatTextView textViewImageName;
@@ -45,6 +48,11 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
         AppCompatButton buttonMinus;
         AppCompatButton buttonPlus;
         AppCompatTextView textViewCount;
+
+      ViewGroup linearLayoutDetails;
+         ImageView imageViewExpand;
+
+       static final int DURATION = 250;
 
         public DishesViewHolder(View itemView) {
             super(itemView);
@@ -58,6 +66,9 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
             this.buttonMinus = (AppCompatButton) itemView.findViewById(R.id.buttonMinus);
             this.buttonPlus = (AppCompatButton) itemView.findViewById(R.id.buttonPlus);
             this.textViewCount = (AppCompatTextView) itemView.findViewById(R.id.textViewCount);
+           /* this.textViewID=(AppCompatTextView)itemView.findViewById(R.id.textViewId);*/
+
+
         }
     }
 
@@ -99,10 +110,14 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
     }
 
     @Override
-    public void onBindViewHolder(final DishesViewHolder viewHolder, final int position) {
-        final Dish dish = dishes.get(viewHolder.getAdapterPosition());
+    public void onBindViewHolder(DishesViewHolder viewHolder, final int position) {
+
+        /*AppCompatTextView textViewId=viewHolder.textViewID;
+        final String idDish = dishes.get(position).getIdDish();*/
+
+
         AppCompatTextView textViewName = viewHolder.textViewName;
-        String name = dishes.get(position).getName();
+        final String name = dishes.get(position).getName();
         textViewName.setText(name);
 
         AppCompatTextView textViewImageName = viewHolder.textViewImageName;
@@ -125,8 +140,8 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
         String minutes = dishes.get(position).getMinutes();
         textViewMinutes.setText("Время приготовления " + minutes + " минут");
 
-        AppCompatImageView imageView = viewHolder.imageView;
-        int resourceId = resources.getIdentifier(imageName, "drawable", context.getPackageName());
+        final AppCompatImageView imageView = viewHolder.imageView;
+        final int resourceId = resources.getIdentifier(imageName, "drawable", context.getPackageName());
         if(resourceId == 0){
             imageView.setImageDrawable(resources.getDrawable(R.drawable.food));
         }else{
@@ -135,31 +150,29 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
 
         AppCompatButton buttonMinus = viewHolder.buttonMinus;
         AppCompatButton buttonPlus = viewHolder.buttonPlus;
+
+        final ViewGroup linearLayoutDetails=viewHolder.linearLayoutDetails;
+        final ImageView imageViewExpand=viewHolder.imageViewExpand;
         final AppCompatTextView textViewCount = viewHolder.textViewCount;
         textViewCount.setText("0");
-
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(context, DishesDetalActivity.class);
+                intent.putExtra("idDish", name);
+
+// Pass data object in the bundle and populate details activity.
+                /*intent.putExtra("idDish", name);
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation((Activity) context, imageView, getString(R.string.transition_image));*/
+              /*  ActivityCompat.startActivity((Activity)context,intent, options.toBundle());*/
+                context.startActivity(intent);
 
 
 
 
-                ActivityOptionsCompat options = makeSceneTransitionAnimation(
-                        // the context of the activity
-                        context.startActivity();,
-                        // For each shared element, add to this method a new Pair item,
-                        // which contains the reference of the view we are transitioning *from*,
-                        // and the value of the transitionName attribute
-                        new Pair<View, String>( v.findViewById(R.id.imageView),
-                                context.getString(R.string.transition_image)),
-                        new Pair<View, String>(v.findViewById(R.id.textViewName),
-                                context.getString(R.string.transition_text))
-
-                );
-                ActivityCompat.startActivity(DishesDetalActivity.class, intent, options.toBundle());
 
             }
         });
@@ -196,12 +209,12 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
                 textViewPTotal.setText(Global.decimalFormat.format(pTotal));
                 Global.currentOrder.setPAmount(pTotal);
                 Utils.log(Global.currentOrder.getString());
+
+
+
             }
         });
     }
-
-
-
 
 
     @Override

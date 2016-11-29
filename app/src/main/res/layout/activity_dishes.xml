@@ -72,4 +72,11 @@
         android:layout_below="@+id/textViewTotal"
         android:layout_toStartOf="@+id/buttonOrder" />
 
+    <android.support.v7.widget.AppCompatTextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewIdDish"
+        android:visibility="invisible"/>
+
 </RelativeLayout>
