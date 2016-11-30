@@ -74,7 +74,8 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
     private Resources resources;
     boolean sizeChanged=false;
     private int savedWidth;
-    private static final int DURATION = 250;
+    private int saverdHeight;
+    private static final int DURATION = 500;
 
     public DishesRecyclerAdapter(
             Context context,
@@ -109,6 +110,9 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
 
     @Override
     public void onBindViewHolder(DishesViewHolder viewHolder, final int position) {
+
+        final ImageView imageViewExpand = viewHolder.imageViewExpand;
+
         AppCompatTextView textViewName = viewHolder.textViewName;
         String name = dishes.get(position).getName();
         textViewName.setText(name);
@@ -160,11 +164,11 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
 
                 TransitionSet transition = new TransitionSet();
                 ChangeBounds changeBounds = new ChangeBounds();
-                changeBounds.setDuration(1500);
+                changeBounds.setDuration(250);
                 Fade fadeOut = new Fade(Fade.OUT);
-                fadeOut.setDuration(1500);
+                fadeOut.setDuration(250);
                 Fade fadeIn = new Fade(Fade.IN);
-                fadeIn.setDuration(1500);
+                fadeIn.setDuration(250);
 
                 transition
                         .addTransition(fadeOut)
@@ -178,10 +182,17 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
 
                 if (sizeChanged) {
                     params.width = savedWidth;
+                    params.height=saverdHeight;
+                    ExpandAndCollapseViewUtil.collapse(linearLayoutDetails, DURATION);
+                    imageViewExpand.setImageResource(R.mipmap.less);
+
                 } else {
                     savedWidth = params.width;
+                    saverdHeight= params.height;
                     params.width = 1000;
                     params.height=400;
+                    ExpandAndCollapseViewUtil.expand(linearLayoutDetails, DURATION);
+                    imageViewExpand.setImageResource(R.mipmap.more);
 
                 }
                 sizeChanged = !sizeChanged;
@@ -189,15 +200,7 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
                /* viewRoot.setLayoutParams(lp);*/
 
 
-                if (linearLayoutDetails.getVisibility() == View.GONE) {
-                    ExpandAndCollapseViewUtil.expand(linearLayoutDetails, DURATION);
-                    imageViewExpand.setImageResource(R.mipmap.more);
 
-                } else {
-                    ExpandAndCollapseViewUtil.collapse(linearLayoutDetails, DURATION);
-                    imageViewExpand.setImageResource(R.mipmap.less);
-
-                }
 
             }
         });
