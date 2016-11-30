@@ -31,4 +31,8 @@
     <string name="title_activity_tabs_header">Header Tabs</string>
     <string name="title_activity_pager">PagerActivity</string>
     <string name="section_format">Page %1$d</string>
+
+
+    <string name="info">The olinguito is distinct from the other species within the genus, popularly known a</string>
+    <string name="details">Details</string>
 </resources>

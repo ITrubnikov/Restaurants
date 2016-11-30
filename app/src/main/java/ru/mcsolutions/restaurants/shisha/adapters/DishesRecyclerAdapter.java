@@ -6,16 +6,25 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.transition.ChangeBounds;
+import android.transition.Fade;
+import android.transition.TransitionManager;
+import android.transition.TransitionSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
 import ru.mcsolutions.restaurants.shisha.R;
 import ru.mcsolutions.restaurants.shisha.classes.Dish;
+import ru.mcsolutions.restaurants.shisha.tools.ExpandAndCollapseViewUtil;
 import ru.mcsolutions.restaurants.shisha.tools.Global;
 import ru.mcsolutions.restaurants.shisha.tools.Utils;
+
+import static ru.mcsolutions.restaurants.shisha.R.id.imageViewExpand;
 
 public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAdapter.DishesViewHolder> {
 
@@ -31,6 +40,13 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
         AppCompatButton buttonMinus;
         AppCompatButton buttonPlus;
         AppCompatTextView textViewCount;
+         ViewGroup viewRoot;
+
+        ViewGroup linearLayoutDetails;
+        ImageView imageViewExpand;
+
+
+
 
         public DishesViewHolder(View itemView) {
             super(itemView);
@@ -44,6 +60,10 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
             this.buttonMinus = (AppCompatButton) itemView.findViewById(R.id.buttonMinus);
             this.buttonPlus = (AppCompatButton) itemView.findViewById(R.id.buttonPlus);
             this.textViewCount = (AppCompatTextView) itemView.findViewById(R.id.textViewCount);
+            this.viewRoot=(ViewGroup)itemView.findViewById(R.id.linerDish);
+
+            this.linearLayoutDetails = (ViewGroup) itemView.findViewById(R.id.linearLayoutDetails);
+            this.imageViewExpand = (ImageView) itemView.findViewById(R.id.imageViewExpand);
         }
     }
 
@@ -52,6 +72,10 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
     AppCompatTextView textViewTotal;
     AppCompatTextView textViewPTotal;
     private Resources resources;
+    boolean sizeChanged=false;
+    private int savedWidth;
+    private int saverdHeight;
+    private static final int DURATION = 500;
 
     public DishesRecyclerAdapter(
             Context context,
@@ -86,6 +110,9 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
 
     @Override
     public void onBindViewHolder(DishesViewHolder viewHolder, final int position) {
+
+        final ImageView imageViewExpand = viewHolder.imageViewExpand;
+
         AppCompatTextView textViewName = viewHolder.textViewName;
         String name = dishes.get(position).getName();
         textViewName.setText(name);
@@ -110,7 +137,11 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
         String minutes = dishes.get(position).getMinutes();
         textViewMinutes.setText("Время приготовления " + minutes + " минут");
 
-        AppCompatImageView imageView = viewHolder.imageView;
+
+        final ViewGroup viewRoot= viewHolder.viewRoot;
+        final ViewGroup linearLayoutDetails=viewHolder.linearLayoutDetails;
+
+        final AppCompatImageView imageView = viewHolder.imageView;
         int resourceId = resources.getIdentifier(imageName, "drawable", context.getPackageName());
         if(resourceId == 0){
             imageView.setImageDrawable(resources.getDrawable(R.drawable.food));
@@ -122,6 +153,57 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
         AppCompatButton buttonPlus = viewHolder.buttonPlus;
         final AppCompatTextView textViewCount = viewHolder.textViewCount;
         textViewCount.setText("0");
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewGroup.LayoutParams params = imageView.getLayoutParams();
+
+                /*LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)viewRoot.getLayoutParams();*/
+
+
+                TransitionSet transition = new TransitionSet();
+                ChangeBounds changeBounds = new ChangeBounds();
+                changeBounds.setDuration(250);
+                Fade fadeOut = new Fade(Fade.OUT);
+                fadeOut.setDuration(250);
+                Fade fadeIn = new Fade(Fade.IN);
+                fadeIn.setDuration(250);
+
+                transition
+                        .addTransition(fadeOut)
+                        .addTransition(changeBounds)
+                        .addTransition(fadeIn);
+
+
+                TransitionManager.beginDelayedTransition(viewRoot,transition);
+
+
+
+                if (sizeChanged) {
+                    params.width = savedWidth;
+                    params.height=saverdHeight;
+                    ExpandAndCollapseViewUtil.collapse(linearLayoutDetails, DURATION);
+                    imageViewExpand.setImageResource(R.mipmap.less);
+
+                } else {
+                    savedWidth = params.width;
+                    saverdHeight= params.height;
+                    params.width = 1000;
+                    params.height=400;
+                    ExpandAndCollapseViewUtil.expand(linearLayoutDetails, DURATION);
+                    imageViewExpand.setImageResource(R.mipmap.more);
+
+                }
+                sizeChanged = !sizeChanged;
+                imageView.setLayoutParams(params);
+               /* viewRoot.setLayoutParams(lp);*/
+
+
+
+
+            }
+        });
 
         buttonMinus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,5 +243,7 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
     public int getItemCount() {
         return dishes.size();
     }
+
+
 
 }
