@@ -13,14 +13,18 @@ import android.transition.TransitionSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
 import ru.mcsolutions.restaurants.shisha.R;
 import ru.mcsolutions.restaurants.shisha.classes.Dish;
+import ru.mcsolutions.restaurants.shisha.tools.ExpandAndCollapseViewUtil;
 import ru.mcsolutions.restaurants.shisha.tools.Global;
 import ru.mcsolutions.restaurants.shisha.tools.Utils;
+
+import static ru.mcsolutions.restaurants.shisha.R.id.imageViewExpand;
 
 public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAdapter.DishesViewHolder> {
 
@@ -38,6 +42,10 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
         AppCompatTextView textViewCount;
          ViewGroup viewRoot;
 
+        ViewGroup linearLayoutDetails;
+        ImageView imageViewExpand;
+
+
 
 
         public DishesViewHolder(View itemView) {
@@ -53,6 +61,9 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
             this.buttonPlus = (AppCompatButton) itemView.findViewById(R.id.buttonPlus);
             this.textViewCount = (AppCompatTextView) itemView.findViewById(R.id.textViewCount);
             this.viewRoot=(ViewGroup)itemView.findViewById(R.id.linerDish);
+
+            this.linearLayoutDetails = (ViewGroup) itemView.findViewById(R.id.linearLayoutDetails);
+            this.imageViewExpand = (ImageView) itemView.findViewById(R.id.imageViewExpand);
         }
     }
 
@@ -63,6 +74,7 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
     private Resources resources;
     boolean sizeChanged=false;
     private int savedWidth;
+    private static final int DURATION = 250;
 
     public DishesRecyclerAdapter(
             Context context,
@@ -123,6 +135,7 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
 
 
         final ViewGroup viewRoot= viewHolder.viewRoot;
+        final ViewGroup linearLayoutDetails=viewHolder.linearLayoutDetails;
 
         final AppCompatImageView imageView = viewHolder.imageView;
         int resourceId = resources.getIdentifier(imageName, "drawable", context.getPackageName());
@@ -174,6 +187,17 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
                 sizeChanged = !sizeChanged;
                 imageView.setLayoutParams(params);
                /* viewRoot.setLayoutParams(lp);*/
+
+
+                if (linearLayoutDetails.getVisibility() == View.GONE) {
+                    ExpandAndCollapseViewUtil.expand(linearLayoutDetails, DURATION);
+                    imageViewExpand.setImageResource(R.mipmap.more);
+
+                } else {
+                    ExpandAndCollapseViewUtil.collapse(linearLayoutDetails, DURATION);
+                    imageViewExpand.setImageResource(R.mipmap.less);
+
+                }
 
             }
         });
