@@ -41,7 +41,8 @@
 
         <activity
             android:name=".activities.DishTypesActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialAnimations" />
 
         <activity
             android:name=".activities.DishesActivity"

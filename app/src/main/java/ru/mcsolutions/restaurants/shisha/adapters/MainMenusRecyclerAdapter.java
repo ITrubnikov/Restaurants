@@ -1,9 +1,11 @@
 package ru.mcsolutions.restaurants.shisha.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
@@ -96,7 +98,11 @@ public class MainMenusRecyclerAdapter extends RecyclerView.Adapter<MainMenusRecy
 //                      break;
                     case "Меню":
                         Intent intent = new Intent(context, DishTypesActivity.class);
-                        context.startActivity(intent);
+                        //context.startActivity(intent);
+
+                        ActivityOptionsCompat transitionActivityOptions =
+                                ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, viewHolder.textViewName, "NameTT");
+                        context.startActivity(intent, transitionActivityOptions.toBundle());
                         break;
                     case "Афиша":
                         Intent intent1 = new Intent(context, AfishaActivity.class);

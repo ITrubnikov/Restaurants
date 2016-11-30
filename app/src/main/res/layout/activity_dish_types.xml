@@ -31,10 +31,11 @@
         />
 
     <android.support.v7.widget.AppCompatTextView
+        android:transitionName="NameTT"
         android:text="Caption"
         android:textSize="20dp"
         android:layout_margin="16dp"
-        android:textColor="@color/cardview_light_background"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textViewCaption"
@@ -53,7 +54,7 @@
     <android.support.v7.widget.AppCompatTextView
         android:text="Total"
         android:textSize="16dp"
-        android:textColor="@color/cardview_light_background"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textViewTotal"
@@ -63,7 +64,7 @@
     <android.support.v7.widget.AppCompatTextView
         android:text="PTotal"
         android:textSize="20dp"
-        android:textColor="@color/cardview_light_background"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textViewPTotal"
