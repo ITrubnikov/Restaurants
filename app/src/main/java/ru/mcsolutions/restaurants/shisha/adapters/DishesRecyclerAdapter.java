@@ -6,9 +6,14 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.transition.ChangeBounds;
+import android.transition.Fade;
+import android.transition.TransitionManager;
+import android.transition.TransitionSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
@@ -31,6 +36,9 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
         AppCompatButton buttonMinus;
         AppCompatButton buttonPlus;
         AppCompatTextView textViewCount;
+         ViewGroup viewRoot;
+
+
 
         public DishesViewHolder(View itemView) {
             super(itemView);
@@ -44,6 +52,7 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
             this.buttonMinus = (AppCompatButton) itemView.findViewById(R.id.buttonMinus);
             this.buttonPlus = (AppCompatButton) itemView.findViewById(R.id.buttonPlus);
             this.textViewCount = (AppCompatTextView) itemView.findViewById(R.id.textViewCount);
+            this.viewRoot=(ViewGroup)itemView.findViewById(R.id.linerDish);
         }
     }
 
@@ -52,6 +61,8 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
     AppCompatTextView textViewTotal;
     AppCompatTextView textViewPTotal;
     private Resources resources;
+    boolean sizeChanged=false;
+    private int savedWidth;
 
     public DishesRecyclerAdapter(
             Context context,
@@ -110,7 +121,10 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
         String minutes = dishes.get(position).getMinutes();
         textViewMinutes.setText("Время приготовления " + minutes + " минут");
 
-        AppCompatImageView imageView = viewHolder.imageView;
+
+        final ViewGroup viewRoot= viewHolder.viewRoot;
+
+        final AppCompatImageView imageView = viewHolder.imageView;
         int resourceId = resources.getIdentifier(imageName, "drawable", context.getPackageName());
         if(resourceId == 0){
             imageView.setImageDrawable(resources.getDrawable(R.drawable.food));
@@ -122,6 +136,47 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
         AppCompatButton buttonPlus = viewHolder.buttonPlus;
         final AppCompatTextView textViewCount = viewHolder.textViewCount;
         textViewCount.setText("0");
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewGroup.LayoutParams params = imageView.getLayoutParams();
+
+                /*LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)viewRoot.getLayoutParams();*/
+
+
+                TransitionSet transition = new TransitionSet();
+                ChangeBounds changeBounds = new ChangeBounds();
+                changeBounds.setDuration(1500);
+                Fade fadeOut = new Fade(Fade.OUT);
+                fadeOut.setDuration(1500);
+                Fade fadeIn = new Fade(Fade.IN);
+                fadeIn.setDuration(1500);
+
+                transition
+                        .addTransition(fadeOut)
+                        .addTransition(changeBounds)
+                        .addTransition(fadeIn);
+
+
+                TransitionManager.beginDelayedTransition(viewRoot,transition);
+
+
+
+                if (sizeChanged) {
+                    params.width = savedWidth;
+                } else {
+                    savedWidth = params.width;
+                    params.width = 1000;
+                    params.height=400;
+
+                }
+                sizeChanged = !sizeChanged;
+                imageView.setLayoutParams(params);
+               /* viewRoot.setLayoutParams(lp);*/
+
+            }
+        });
 
         buttonMinus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,5 +216,7 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
     public int getItemCount() {
         return dishes.size();
     }
+
+
 
 }
