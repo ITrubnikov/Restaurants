@@ -24,7 +24,6 @@ import ru.mcsolutions.restaurants.shisha.tools.ExpandAndCollapseViewUtil;
 import ru.mcsolutions.restaurants.shisha.tools.Global;
 import ru.mcsolutions.restaurants.shisha.tools.Utils;
 
-import static ru.mcsolutions.restaurants.shisha.R.id.imageViewExpand;
 
 public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAdapter.DishesViewHolder> {
 
@@ -43,7 +42,7 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
          ViewGroup viewRoot;
 
         ViewGroup linearLayoutDetails;
-        ImageView imageViewExpand;
+
 
 
 
@@ -63,7 +62,7 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
             this.viewRoot=(ViewGroup)itemView.findViewById(R.id.linerDish);
 
             this.linearLayoutDetails = (ViewGroup) itemView.findViewById(R.id.linearLayoutDetails);
-            this.imageViewExpand = (ImageView) itemView.findViewById(R.id.imageViewExpand);
+
         }
     }
 
@@ -111,7 +110,7 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
     @Override
     public void onBindViewHolder(DishesViewHolder viewHolder, final int position) {
 
-        final ImageView imageViewExpand = viewHolder.imageViewExpand;
+
 
         AppCompatTextView textViewName = viewHolder.textViewName;
         String name = dishes.get(position).getName();
@@ -184,7 +183,7 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
                     params.width = savedWidth;
                     params.height=saverdHeight;
                     ExpandAndCollapseViewUtil.collapse(linearLayoutDetails, DURATION);
-                    imageViewExpand.setImageResource(R.mipmap.less);
+
 
                 } else {
                     savedWidth = params.width;
@@ -192,7 +191,7 @@ public class DishesRecyclerAdapter extends RecyclerView.Adapter<DishesRecyclerAd
                     params.width = 1000;
                     params.height=400;
                     ExpandAndCollapseViewUtil.expand(linearLayoutDetails, DURATION);
-                    imageViewExpand.setImageResource(R.mipmap.more);
+
 
                 }
                 sizeChanged = !sizeChanged;
